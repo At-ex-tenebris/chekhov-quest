@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вызов от Чехова - Мир Чехова</title> <!-- Измените title на соответствующий -->
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS (убедитесь, что путь правильный) -->
+    <!-- Если challenge.html в той же папке, что и style.css: -->
+    <link rel="stylesheet" href="../style.css">
+    <!-- Если challenge.html в подпапке (например, quests/challenge.html): -->
+    <style>
+        .matching-quest-container {
+            /* Стили контейнера, если нужны, у вас уже могут быть */
+        }
+
+        .matching-quest-header {
+            font-family: var(--font-secondary);
+            color: var(--accent-dark);
+            font-size: 1.7rem;
+        }
+
+        .matching-item {
+            position: relative;
+            /* Для позиционирования кружка */
+            padding: 10px;
+            border: 1px solid var(--border-color, #ccc);
+            border-radius: 8px;
+            background-color: var(--bg-light, #f9f9f9);
+            display: flex;
+            /* Для выравнивания контента и кружка */
+            align-items: center;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .image-item img {
+            max-width: 100%;
+            max-height: 150px;
+            /* Ограничение высоты картинки, чтобы не были слишком большими */
+            object-fit: contain;
+            border-radius: 4px;
+            margin-right: 15px;
+            /* Отступ от кружка */
+        }
+
+        .story-item p {
+            margin: 0;
+            flex-grow: 1;
+            /* Текст занимает доступное пространство */
+            margin-right: 15px;
+            /* Отступ от кружка */
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .connector-dot {
+            width: 20px;
+            height: 20px;
+            background-color: var(--accent-light, #d2b48c);
+            border: 2px solid var(--accent-dark, #8B4513);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            padding: 0;
+            /* Убрать внутренние отступы кнопки */
+            flex-shrink: 0;
+            /* Чтобы кружок не сжимался */
+        }
+
+        .connector-dot:hover {
+            background-color: var(--accent-dark, #8B4513);
+            transform: scale(1.1);
+        }
+
+        .connector-dot.selected {
+            background-color: var(--bs-success, green);
+            /* Цвет выбранного кружка */
+            border-color: var(--bs-success-text-emphasis, darkgreen);
+            box-shadow: 0 0 8px var(--bs-success, green);
+        }
+
+        /* Стили для "связанных" элементов (если не рисуем линии) */
+        .matching-item.connected-pair-1 {
+            background-color: #e0f7fa;
+            border-left: 5px solid #00bcd4;
+        }
+
+        .matching-item.connected-pair-2 {
+            background-color: #fff9c4;
+            border-left: 5px solid #ffeb3b;
+        }
+
+        .matching-item.connected-pair-3 {
+            background-color: #fce4ec;
+            border-left: 5px solid #e91e63;
+        }
+
+        .matching-item.connected-pair-4 {
+            background-color: #e8f5e9;
+            border-left: 5px solid #4caf50;
+        }
+
+        /* Добавьте больше .connected-pair-N по необходимости */
+
+        .matching-item.connection-correct {
+            border: 2px solid green !important;
+        }
+
+        .matching-item.connection-incorrect {
+            border: 2px solid red !important;
+        }
+
+        .quest-feedback-message {
+            /* У вас уже может быть такой класс */
+            font-size: 1.1em;
+            font-weight: 500;
+            min-height: 1.5em;
+            margin-top: 1rem;
+        }
+
+        .quest-feedback-message.correct {
+            color: green;
+        }
+
+        .quest-feedback-message.incorrect {
+            color: red;
+        }
+    </style>
+
+</head>
+
+<body class="quest-active"> <!-- или другой класс, если нужен особый фон/стили для этой страницы -->
+
+    <!-- Navigation Bar - ТАКАЯ ЖЕ, КАК НА ДРУГИХ СТРАНИЦАХ -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html"> <!-- Ссылка на главную -->
+                <!-- Убедитесь, что путь к logo.png правильный -->
+                <img src="../logo.png" alt="Логотип Квеста" width="30" height="30"
+                    class="d-inline-block align-text-top me-2">
+                <span class="brand-main-text">Мир Чехова</span>
+                <span class="brand-tagline ms-2">| грустные оптимисты</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../1/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 1:</span>
+                            <span class="quest-title d-block">Шуточка</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../2/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 2:</span>
+                            <span class="quest-title d-block">Репетитор</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../3/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 3:</span>
+                            <span class="quest-title d-block">Злоумышленник</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../4/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 4:</span>
+                            <span class="quest-title d-block">Спать хочется</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../5/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 5:</span>
+                            <span class="quest-title d-block">Дорогая собака</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../6/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 6:</span>
+                            <span class="quest-title d-block">Пари</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../7/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 7:</span>
+                            <span class="quest-title d-block">Не в духе</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../8/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 8:</span>
+                            <span class="quest-title d-block">Биография</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основное содержимое страницы -->
+    <main class="container matching-quest-container my-5 pt-4 pb-5">
+        <div class="row">
+            <div class="col-12 text-center mb-4">
+                <h2 class="matching-quest-header">Соотнесите иллюстрацию с произведением и его данными</h2>
+                <p class="lead">Антон Чехов публиковал свои рассказы в разных изданиях. Давайте соотнесем его
+                    произведения, годы их публикации и журналы, где они впервые увидели свет. Кликните на кружок у
+                    картинки, а затем на кружок у соответствующего ей описания.</p>
+            </div>
+        </div>
+
+        <div class="row align-items-stretch">
+            <!-- Колонка с картинками -->
+            <div class="col-md-5 col-lg-4 image-column">
+                <div class="matching-item image-item mb-3" data-match-id="img1">
+                    <img src="q4/image.png" alt="Иллюстрация 1" class="img-fluid">
+                    <button class="connector-dot" data-connector-type="image" data-id="img1"
+                        title="Соединить эту картинку"></button>
+                </div>
+                <div class="matching-item image-item mb-3" data-match-id="img2">
+                    <img src="q4/image2.png" alt="Иллюстрация 2" class="img-fluid">
+                    <button class="connector-dot" data-connector-type="image" data-id="img2"
+                        title="Соединить эту картинку"></button>
+                </div>
+                <div class="matching-item image-item mb-3" data-match-id="img3">
+                    <img src="q4/image3.png" alt="Иллюстрация 3" class="img-fluid">
+                    <button class="connector-dot" data-connector-type="image" data-id="img3"
+                        title="Соединить эту картинку"></button>
+                </div>
+                <div class="matching-item image-item mb-3" data-match-id="img4">
+                    <img src="q4/image4.png" alt="Иллюстрация 4" class="img-fluid">
+                    <button class="connector-dot" data-connector-type="image" data-id="img4"
+                        title="Соединить эту картинку"></button>
+                </div>
+            </div>
+
+            <!-- Колонка с рассказами -->
+            <div class="col-md-7 col-lg-8 story-column">
+                <!-- img1 соответствует story1 -->
+                
+                
+                
+                <div class="matching-item story-item mb-3" data-match-id="story3">
+                    <p>Рассказ «Ванька», 1886 г.</p>
+                    <button class="connector-dot" data-connector-type="story" data-id="story3"
+                    title="Соединить это описание"></button>
+                </div>
+                
+                <div class="matching-item story-item mb-3" data-match-id="story1">
+                    <p>Рассказ «Письмо к учёному соседу», 1880 г.</p>
+                    <button class="connector-dot" data-connector-type="story" data-id="story1"
+                        title="Соединить это описание"></button>
+                </div>
+                
+                <div class="matching-item story-item mb-3" data-match-id="story2">
+                    <p>Рассказ «Толстый и тонкий», 1883 г.</p>
+                    <p>Рассказ «Хамелеон», 1884 г.</p>
+                    <p>Рассказ «Пересолил», 1885 г.</p>
+                    <button class="connector-dot" data-connector-type="story" data-id="story2"
+                        title="Соединить это описание"></button>
+                </div>
+                <!-- img3 соответствует story5 -->
+
+                <div class="matching-item story-item mb-3" data-match-id="story4">
+                    <p>Рассказ «Палата №6», 1892 г.</p>
+                    <p>Рассказ «Дама с собачкой», 1899 г.</p>
+                    <button class="connector-dot" data-connector-type="story" data-id="story4"
+                        title="Соединить это описание"></button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <div id="matching-feedback" class="quest-feedback-message"></div>
+                <button class="btn btn-start-quest mt-2" id="checkMatchesButton">Проверить связи</button>
+                <button class="btn btn-secondary-custom mt-2" id="resetMatchesButton">Сбросить</button>
+                <a href="quest_page_5.html" id="nextMatchingQuestButton"
+                    class="btn btn-start-quest mt-2 d-none">Следующий квест</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Картинка Чехова в углу (если она нужна на этой странице) -->
+    <div id="chekhov-corner">
+        <!-- Убедитесь, что путь к placeholder-chekhov.png правильный -->
+        <img src="placeholder-chekhov.png" alt="Антон Чехов" title="Антон Павлович Чехов">
+    </div>
+
+    <!-- Подвал - ТАКОЙ ЖЕ, КАК НА ДРУГИХ СТРАНИЦАХ -->
+    <footer class="footer mt-auto py-3">
+        <div class="container text-center">
+            <span class="text-muted">© 2024 Литературный квест "Мир Чехова". Все права защищены.</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <!-- Сюда можно добавить специфичные для этой страницы JS, если понадобятся -->
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const imageDots = document.querySelectorAll('.connector-dot[data-connector-type="image"]');
+    const storyDots = document.querySelectorAll('.connector-dot[data-connector-type="story"]');
+    const checkButton = document.getElementById('checkMatchesButton');
+    const resetButton = document.getElementById('resetMatchesButton');
+    const nextButton = document.getElementById('nextMatchingQuestButton');
+    const feedbackDiv = document.getElementById('matching-feedback');
+
+    let firstSelectedDot = null;
+    let connections = []; // Массив для хранения связей: [{imgId: 'img1', storyId: 'story1'}]
+    let pairColorCounter = 1; // Для назначения разных цветов связанным парам
+
+    // Определяем правильные соответствия
+    // Ключ - data-match-id картинки, значение - data-match-id соответствующего рассказа
+    const correctMatches = {
+        "img1": "story1",
+        "img2": "story2", // Пример: img2 соответствует "Хамелеон"
+        "img3": "story3",
+        "img4": "story4"  // Пример: img4 соответствует "Дама с собачкой"
+    };
+
+    function resetSelection() {
+        if (firstSelectedDot) {
+            firstSelectedDot.classList.remove('selected');
+        }
+        firstSelectedDot = null;
+    }
+
+    function handleDotClick(event) {
+        const clickedDot = event.currentTarget;
+
+        if (clickedDot.classList.contains('selected')) { // Отмена выбора
+            clickedDot.classList.remove('selected');
+            if (firstSelectedDot === clickedDot) {
+                firstSelectedDot = null;
+            }
+            return;
+        }
+
+        // Если это уже связанная точка, не позволяем перевыбрать (сначала нужно сбросить)
+        const parentItem = clickedDot.closest('.matching-item');
+        if (Array.from(parentItem.classList).some(cls => cls.startsWith('connected-pair-'))) {
+            feedbackDiv.textContent = "Эта связь уже установлена. Сбросьте, чтобы изменить.";
+            setTimeout(() => feedbackDiv.textContent = "", 3000);
+            return;
+        }
+
+
+        if (!firstSelectedDot) {
+            firstSelectedDot = clickedDot;
+            firstSelectedDot.classList.add('selected');
+        } else {
+            // Есть первый выбор, теперь делаем связь
+            if (firstSelectedDot.dataset.connectorType === clickedDot.dataset.connectorType) {
+                // Кликнули на точку того же типа, перевыбираем первую
+                firstSelectedDot.classList.remove('selected');
+                firstSelectedDot = clickedDot;
+                firstSelectedDot.classList.add('selected');
+            } else {
+                // Устанавливаем связь
+                const imgDot = firstSelectedDot.dataset.connectorType === 'image' ? firstSelectedDot : clickedDot;
+                const storyDot = firstSelectedDot.dataset.connectorType === 'story' ? firstSelectedDot : clickedDot;
+
+                const imgItem = imgDot.closest('.matching-item');
+                const storyItem = storyDot.closest('.matching-item');
+
+                // Проверяем, не связаны ли уже эти элементы
+                const existingConnection = connections.find(c => 
+                    (c.imgId === imgDot.dataset.id && c.storyId === storyDot.dataset.id) ||
+                    Array.from(imgItem.classList).some(cls => cls.startsWith('connected-pair-')) ||
+                    Array.from(storyItem.classList).some(cls => cls.startsWith('connected-pair-'))
+                );
+
+                if (existingConnection) {
+                     feedbackDiv.textContent = "Один из этих элементов уже связан.";
+                     setTimeout(() => feedbackDiv.textContent = "", 3000);
+                     resetSelection();
+                     return;
+                }
+
+
+                connections.push({ imgId: imgDot.dataset.id, storyId: storyDot.dataset.id, pairClass: `connected-pair-${pairColorCounter}` });
+                
+                imgItem.classList.add(`connected-pair-${pairColorCounter}`);
+                storyItem.classList.add(`connected-pair-${pairColorCounter}`);
+                
+                imgDot.classList.remove('selected'); // Снимаем выделение с точек
+                storyDot.classList.remove('selected');
+                // imgDot.disabled = true; // Можно заблокировать точки после связи
+                // storyDot.disabled = true;
+
+                pairColorCounter++;
+                if (pairColorCounter > 4) pairColorCounter = 1; // Циклично используем 4 цвета
+
+                resetSelection();
+            }
+        }
+    }
+
+    imageDots.forEach(dot => dot.addEventListener('click', handleDotClick));
+    storyDots.forEach(dot => dot.addEventListener('click', handleDotClick));
+
+    checkButton.addEventListener('click', () => {
+        if (connections.length === 0) {
+            feedbackDiv.textContent = "Сначала установите связи.";
+            feedbackDiv.className = 'quest-feedback-message';
+            return;
+        }
+        
+        let allCorrect = true;
+        let correctConnectionsCount = 0;
+
+        // Сначала убираем предыдущие классы корректности
+        document.querySelectorAll('.matching-item.connection-correct, .matching-item.connection-incorrect')
+            .forEach(item => item.classList.remove('connection-correct', 'connection-incorrect'));
+
+        connections.forEach(conn => {
+            const imgItem = document.querySelector(`.image-item .connector-dot[data-id="${conn.imgId}"]`).closest('.matching-item');
+            const storyItem = document.querySelector(`.story-item .connector-dot[data-id="${conn.storyId}"]`).closest('.matching-item');
+            
+            const expectedStoryIdForImage = correctMatches[imgItem.dataset.matchId];
+            
+            if (expectedStoryIdForImage === storyItem.dataset.matchId) {
+                imgItem.classList.add('connection-correct');
+                storyItem.classList.add('connection-correct');
+                correctConnectionsCount++;
+            } else {
+                imgItem.classList.add('connection-incorrect');
+                storyItem.classList.add('connection-incorrect');
+                allCorrect = false;
+            }
+        });
+
+        // Проверка, что все ПРАВИЛЬНЫЕ связи установлены и нет лишних
+        // Это более сложная проверка, если пользователь может сделать меньше связей, чем нужно.
+        // Пока что считаем успехом, если все сделанные связи верны и их количество равно количеству правильных пар.
+        if (allCorrect && connections.length === Object.keys(correctMatches).length && correctConnectionsCount === Object.keys(correctMatches).length) {
+            feedbackDiv.textContent = 'Отлично! Все связи установлены верно!';
+            feedbackDiv.className = 'quest-feedback-message correct';
+            nextButton.classList.remove('d-none');
+            checkButton.disabled = true;
+            resetButton.disabled = true;
+            // Блокируем все точки
+            imageDots.forEach(dot => dot.disabled = true);
+            storyDots.forEach(dot => dot.disabled = true);
+        } else {
+            feedbackDiv.textContent = 'Некоторые связи неверны или не все правильные связи установлены. Попробуйте еще раз.';
+            feedbackDiv.className = 'quest-feedback-message incorrect';
+            // Не сбрасываем неправильные подсветки, чтобы пользователь видел ошибки
+        }
+    });
+
+    resetButton.addEventListener('click', () => {
+        connections.forEach(conn => {
+            const imgItem = document.querySelector(`.image-item .connector-dot[data-id="${conn.imgId}"]`).closest('.matching-item');
+            const storyItem = document.querySelector(`.story-item .connector-dot[data-id="${conn.storyId}"]`).closest('.matching-item');
+            imgItem.className = 'matching-item image-item mb-3'; // Сброс всех доп. классов
+            storyItem.className = 'matching-item story-item mb-3';
+        });
+        connections = [];
+        pairColorCounter = 1;
+        resetSelection();
+        imageDots.forEach(dot => {
+            dot.classList.remove('selected');
+            dot.disabled = false;
+        });
+        storyDots.forEach(dot => {
+            dot.classList.remove('selected');
+            dot.disabled = false;
+        });
+        feedbackDiv.textContent = '';
+        feedbackDiv.className = 'quest-feedback-message';
+        nextButton.classList.add('d-none');
+        checkButton.disabled = false;
+        resetButton.disabled = false;
+    });
+});
+</script>
+</body>
+
+</html>
