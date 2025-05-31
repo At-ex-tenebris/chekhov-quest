@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Квест: Найди слова - Мир Чехова</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css"> <!-- Предполагается, что style.css находится в родительской папке -->
+
+    <style>
+        body {
+            padding-top: 80px;
+            background-color: var(--bg-light);
+        }
+        .quest-title-ws { /* ws for word search */
+            font-family: var(--font-secondary);
+            color: var(--accent-dark);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        .word-search-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 1rem auto;
+            padding: 1rem;
+            background-color: var(--bg-medium);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .letter-grid-container {
+            overflow-x: auto; /* Для случая очень широкой сетки */
+        }
+        .letter-grid {
+            display: grid;
+            grid-template-columns: repeat(26, 28px); /* 26 колонок */
+            gap: 2px;
+            background-color: var(--border-color);
+            border: 2px solid var(--border-color);
+            padding: 2px;
+        }
+        .grid-cell {
+            width: 28px;
+            height: 28px;
+            background-color: var(--bg-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: var(--font-primary);
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--text-color);
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            border: 1px solid transparent; /* для лучшего вида при выделении */
+        }
+        .grid-cell:hover {
+            background-color: var(--bg-dark);
+        }
+        .grid-cell.selected {
+            background-color: var(--accent-light); /* Цвет выделения */
+            color: var(--bg-light);
+            border: 1px solid var(--accent-dark);
+        }
+        .word-list-container {
+            flex-basis: 250px; /* Ширина списка слов */
+            padding: 15px;
+            background-color: var(--bg-light);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .word-list-container h3 {
+            font-family: var(--font-secondary);
+            color: var(--accent-dark);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        .word-list {
+            list-style: none;
+            padding: 0;
+        }
+        .word-list li {
+            padding: 5px 0;
+            font-family: var(--font-primary);
+            color: var(--text-muted);
+            transition: color 0.3s ease, text-decoration 0.3s ease;
+        }
+        .word-list li.found {
+            color: green;
+            text-decoration: line-through;
+            font-weight: bold;
+        }
+        .controls-ws {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .btn-ws { /* Общий стиль для кнопок квеста */
+            background-color: var(--accent-dark);
+            border-color: var(--accent-dark);
+            color: var(--bg-light);
+            padding: 0.7rem 1.5rem;
+            font-size: 1rem;
+            margin: 5px;
+        }
+        .btn-ws:hover {
+            background-color: var(--text-color);
+            border-color: var(--text-color);
+            color: var(--bg-light);
+        }
+        .btn-reset-ws {
+            background-color: var(--accent-light);
+            border-color: var(--accent-light);
+            color: var(--text-color);
+        }
+        .btn-reset-ws:hover {
+             background-color: var(--border-color);
+             border-color: var(--border-color);
+        }
+        #ws-feedback {
+            margin-top: 1rem;
+            font-size: 1.1em;
+            font-weight: bold;
+            min-height: 25px;
+            text-align: center;
+        }
+        .feedback-correct { color: green; }
+        .feedback-incorrect { color: red; }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .letter-grid {
+                grid-template-columns: repeat(26, 24px); /* Уменьшаем ячейки */
+            }
+            .grid-cell {
+                width: 24px;
+                height: 24px;
+                font-size: 0.8rem;
+            }
+            .word-search-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .word-list-container {
+                width: 90%;
+                max-width: 300px; /* Ограничим ширину списка */
+                margin-top: 15px;
+            }
+        }
+         @media (max-width: 480px) {
+            .letter-grid {
+                grid-template-columns: repeat(26, 20px); /* Еще уменьшаем ячейки */
+                 gap: 1px;
+            }
+            .grid-cell {
+                width: 20px;
+                height: 20px;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <!-- Путь к index.html и logo.png изменен на ../ -->
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <img src="../logo.png" alt="Логотип Квеста" width="30" height="30" class="d-inline-block align-text-top me-2">
+                <span class="brand-main-text">Мир Чехова</span>
+                <span class="brand-tagline ms-2">| грустные оптимисты</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../1/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 1:</span>
+                            <span class="quest-title d-block">Шуточка</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../2/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 2:</span>
+                            <span class="quest-title d-block">Репетитор</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../3/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 3:</span>
+                            <span class="quest-title d-block">Злоумышленник</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../4/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 4:</span>
+                            <span class="quest-title d-block">Спать хочется</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../5/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 5:</span>
+                            <span class="quest-title d-block">Дорогая собака</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../6/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 6:</span>
+                            <span class="quest-title d-block">Пари</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../7/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 7:</span>
+                            <span class="quest-title d-block">Не в духе</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../8/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 8:</span>
+                            <span class="quest-title d-block">Биография</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2 class="quest-title-ws">Найдите все слова в сетке!</h2>
+        <div class="word-search-container">
+            <div class="letter-grid-container">
+                <div class="letter-grid" id="letterGrid">
+                    <!-- Ячейки будут добавлены JavaScript-ом -->
+                </div>
+            </div>
+            <div class="word-list-container">
+                <h3>Слова для поиска:</h3>
+                <ul class="word-list" id="wordList">
+                    <!-- Список слов будет добавлен JavaScript-ом -->
+                </ul>
+            </div>
+        </div>
+        <div class="controls-ws">
+            <button class="btn btn-ws" id="checkWordsButton">Проверить</button>
+            <button class="btn btn-ws btn-reset-ws" id="resetWordsButton">Сбросить</button>
+            <a href="quest_page_8.html" class="btn btn-ws" id="nextWordQuestButton" style="display: none;">Следующий квест</a>
+        </div>
+        <div id="ws-feedback"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const gridLettersData = [
+            ['Ш','Б','Р','Ш','У','О','Ъ','Ь','Б','Ж','Ч','Ы','Ю','М','Ш','Р','З','П','И','В','О','Ч','А','Я','Э','Х'],
+            ['В','Ш','Т','Р','В','Ч','К','Й','С','О','Б','А','Ч','Е','Ч','К','А','Ц','Ё','Ш','Г','Н','А','Е','Н','К'],
+            ['И','Ю','Э','З','З','Е','Б','Ь','В','В','П','А','К','Р','А','С','А','В','И','Ц','А','П','Ю','Ь','Э','П'],
+            ['Ц','Т','Ё','Е','С','Я','П','Р','Н','Ф','У','Т','Е','З','А','М','Е','Ч','А','Т','Е','Л','Ь','Н','А','Я'],
+            ['Д','Б','Й','Ф','О','Ы','Б','Е','Б','К','О','Ь','Г','К','Ш','Ь','П','Ш','З','У','П','Я','В','Ь','М','Е'],
+            ['В','Й','Ш','Я','Ш','Ш','Д','А','О','Э','Д','У','Р','А','Х','Ъ','К','Ч','А','Ж','Р','Х','П','Ф','Ж','И'],
+            ['О','Т','В','Р','А','Т','И','Т','Е','Л','Ь','Н','А','Я','П','Ь','Р','Ь','О','М','А','Б','Ь','Ф','В','В'],
+            ['К','З','Я','Щ','Ш','О','В','А','Ь','М','Й','Я','М','Л','Б','Ж','Ё','У','Ц','Ч','З','Ч','Ь','Ф','Ь','Х'],
+            ['Х','Д','О','Ш','Н','В','Н','Я','Е','Щ','К','К','Х','И','Ы','Ы','Ф','В','К','Ч','Щ','Ь','Е','Н','Э','Ю'],
+            ['Л','И','Х','Ё','М','У','А','Л','Д','Я','Е','У','Н','Е','Ж','О','Я','Ы','Ь','П','Ы','Ь','Р','В','Т','Э'],
+            ['Ё','Б','Ж','Ч','И','И','Я','Я','В','Н','Ц','С','Ж','У','Ю','К','Е','Ъ','В','Я','А','Й','К','Л','Х','М']
+        ];
+
+        const targetWordsConfig = [
+            { id: "word1", text: "СОБАЧЕЧКА", coords: [[1,8],[1,9],[1,10],[1,11],[1,12],[1,13],[1,14],[1,15],[1,16]] },
+            { id: "word2", text: "ДУРА", coords: [[5,10],[5,11],[5,12],[5,13]] },
+            { id: "word3", text: "КРАСАВИЦА", coords: [[2,12],[2,13],[2,14],[2,15],[2,16],[2,17],[2,18],[2,19],[2,20]] },
+            { id: "word4", text: "ЗАМЕЧАТЕЛЬНАЯ", coords: [[3,13],[3,14],[3,15],[3,16],[3,17],[3,18],[3,19],[3,20],[3,21],[3,22],[3,23],[3,24],[3,25]] },
+            { id: "word5", text: "ОТВРАТИТЕЛЬНАЯ", coords: [[6,0],[6,1],[6,2],[6,3],[6,4],[6,5],[6,6],[6,7],[6,8],[6,9],[6,10],[6,11],[6,12],[6,13]] },
+            { id: "word6", text: "ДИВНАЯ", coords: [[5,6],[6,6],[7,6],[8,6],[9,6],[10,6]] },
+            { id: "word7", text: "МЕРЗКАЯ", coords: [[0,13],[1,13],[2,13],[3,13],[4,13],[5,13],[6,13]] }
+        ];
+
+        const letterGrid = document.getElementById('letterGrid');
+        const wordListUl = document.getElementById('wordList');
+        const checkButton = document.getElementById('checkWordsButton');
+        const resetButton = document.getElementById('resetWordsButton');
+        const nextButton = document.getElementById('nextWordQuestButton');
+        const feedbackDiv = document.getElementById('ws-feedback');
+
+        // Рендеринг сетки и списка слов
+        function initializeWordSearch() {
+            letterGrid.innerHTML = '';
+            wordListUl.innerHTML = '';
+            
+            gridLettersData.forEach((row, rIndex) => {
+                row.forEach((letter, cIndex) => {
+                    const cell = document.createElement('div');
+                    cell.classList.add('grid-cell');
+                    cell.textContent = letter;
+                    cell.dataset.row = rIndex;
+                    cell.dataset.col = cIndex;
+                    cell.addEventListener('click', () => {
+                        cell.classList.toggle('selected');
+                    });
+                    letterGrid.appendChild(cell);
+                });
+            });
+
+            targetWordsConfig.forEach(word => {
+                const li = document.createElement('li');
+                li.textContent = word.text;
+                li.id = word.id;
+                wordListUl.appendChild(li);
+            });
+        }
+
+        // Проверка результатов
+        checkButton.addEventListener('click', () => {
+            let allWordsCorrectlyHighlighted = true;
+            let totalUserSelectedCells = 0;
+            const userSelectedCoords = new Set();
+
+            document.querySelectorAll('.grid-cell.selected').forEach(cell => {
+                userSelectedCoords.add(`${cell.dataset.row},${cell.dataset.col}`); // Правильно
+                totalUserSelectedCells++;
+            });
+
+            let totalSolutionCellsCount = 0;
+            const allSolutionCoordsSet = new Set();
+            targetWordsConfig.forEach(w => w.coords.forEach(c => allSolutionCoordsSet.add(`${c[0]},${c[1]}`))); // Правильно
+            totalSolutionCellsCount = allSolutionCoordsSet.size;
+            
+            targetWordsConfig.forEach(word => {
+                const wordLi = document.getElementById(word.id);
+                let currentWordFullySelected = true;
+                for (const coord of word.coords) {
+                    if (!userSelectedCoords.has(`${coord[0]},${coord[1]}`)) {
+                        currentWordFullySelected = false;
+                        break;
+                    }
+                }
+
+                if (currentWordFullySelected) {
+                    wordLi.classList.add('found');
+                } else {
+                    wordLi.classList.remove('found');
+                    allWordsCorrectlyHighlighted = false;
+                }
+            });
+
+            // Проверяем, что количество выделенных ячеек совпадает с количеством ячеек в решении
+            // и что все слова найдены
+            if (allWordsCorrectlyHighlighted && totalUserSelectedCells === totalSolutionCellsCount) {
+                feedbackDiv.textContent = 'Поздравляем! Все слова найдены верно!';
+                feedbackDiv.className = 'feedback-correct';
+                nextButton.style.display = 'inline-block';
+                checkButton.disabled = true;
+                resetButton.disabled = true;
+            } else {
+                feedbackDiv.textContent = 'Некоторые слова не найдены или выделены лишние буквы. Попробуйте еще раз.';
+                feedbackDiv.className = 'feedback-incorrect';
+                nextButton.style.display = 'none';
+            }
+            setTimeout(() => {
+                if (!(allWordsCorrectlyHighlighted && totalUserSelectedCells === totalSolutionCellsCount)) {
+                    feedbackDiv.textContent = '';
+                }
+            }, 4000);
+        });
+
+        // Сброс
+        resetButton.addEventListener('click', () => {
+            document.querySelectorAll('.grid-cell.selected').forEach(cell => cell.classList.remove('selected'));
+            targetWordsConfig.forEach(word => {
+                const wordLi = document.getElementById(word.id);
+                wordLi.classList.remove('found');
+            });
+            feedbackDiv.textContent = '';
+            feedbackDiv.className = '';
+            nextButton.style.display = 'none';
+            checkButton.disabled = false;
+            resetButton.disabled = false;
+        });
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', initializeWordSearch);
+    </script>
+</body>
+</html>

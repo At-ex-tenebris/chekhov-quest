@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тайна Раскрыта - Мир Чехова</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        /* --- Стили для страницы ребуса --- */
+
+        #puzzleCard .phrase-label strong {
+            color: var(--accent-dark);
+            /* Более явное выделение заголовка ребуса */
+        }
+
+        #puzzleCard .phrase-content {
+            font-size: 1.1rem;
+            font-style: italic;
+            /* Зеркальный текст курсивом */
+            color: var(--text-muted);
+            /* Можно сделать его чуть приглушеннее */
+        }
+
+        #checkMysteryButton {
+            padding: 0.7rem 1.8rem;
+            /* Чуть крупнее кнопка проверки */
+        }
+
+        /* Сообщение обратной связи (текст "Верно" / "Неверно") */
+        .mystery-feedback-message {
+            font-size: 1.1em;
+            font-weight: bold;
+            /* Сделать жирнее */
+            min-height: 28px;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Цвета для .feedback-correct и .feedback-incorrect уже должны быть определены */
+
+
+        /* Контейнер успеха */
+        #success-message-container {
+            background-color: var(--bg-light);
+            border: 2px solid var(--accent-dark);
+            /* Рамка в стиле темы */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #success-message-container .mystery-page-title.feedback-correct {
+            font-size: 1.9rem;
+            /* Крупный заголовок успеха */
+            color: var(--accent-dark);
+            /* Цвет заголовка успеха */
+        }
+
+        #success-message-container .revealed-phrase-box {
+            background-color: var(--bg-medium);
+            /* Фон для правильной фразы */
+            border-left-color: var(--accent-dark);
+            /* Акцентная линия */
+            padding: 0.75rem 1rem;
+        }
+
+        #success-message-container .revealed-phrase-box .phrase-content strong {
+            font-family: var(--font-primary);
+            /* Используем основной шрифт для самой фразы */
+            font-weight: 600;
+            /* Слегка жирнее */
+            color: var(--text-color);
+            font-style: normal;
+            /* Убираем курсив, если он был у .phrase-content */
+        }
+
+        #completeQuestButton {
+            font-size: 1.15rem;
+        }
+    </style>
+
+</head>
+
+<body class="quest-active">
+
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <img src="../logo.png" alt="Логотип Квеста" width="30" height="30"
+                    class="d-inline-block align-text-top me-2">
+                <span class="brand-main-text">Мир Чехова</span>
+                <span class="brand-tagline ms-2">| грустные оптимисты</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../1/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 1:</span>
+                            <span class="quest-title d-block">Шуточка</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../2/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 2:</span>
+                            <span class="quest-title d-block">Репетитор</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../3/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 3:</span>
+                            <span class="quest-title d-block">Злоумышленник</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../4/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 4:</span>
+                            <span class="quest-title d-block">Спать хочется</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../5/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 5:</span>
+                            <span class="quest-title d-block">Дорогая собака</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../6/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 6:</span>
+                            <span class="quest-title d-block">Пари</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../7/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 7:</span>
+                            <span class="quest-title d-block">Не в духе</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../8/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 8:</span>
+                            <span class="quest-title d-block">Биография</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container quest-container-mystery my-5">
+    <h2 class="mystery-page-title text-center mb-3">
+        Задание: Разгадайте Ребус!
+    </h2>
+
+    <!-- Карточка с заданием (ребусом и полем для ответа) -->
+    <div class="statement-card p-lg-4 p-3 mb-4" id="puzzleCard">
+        <p class="intro-text mb-3">
+            Внимание, финальное испытание! Перед вами фраза, записанная наоборот. Ваша задача — расшифровать её и ввести правильный вариант в поле ниже.
+        </p>
+        <div class="phrase-box reversed-phrase-box mb-4">
+            <p class="phrase-label"><strong>ЗАШИФРОВАННАЯ ФРАЗА (РЕБУС):</strong></p>
+            <p class="phrase-content" id="reversedTextDisplay">ынитси ксиоп теачгелбо вовитом еинаминоп он ,йиненивбо то теасапс ен воноказ еинанзен</p>
+        </div>
+
+        <div class="answer-submission-section mt-3">
+            <label for="userAnswerTextarea" class="form-label explanation-label mb-2">Введите расшифрованную фразу здесь:</label>
+            <textarea class="form-control explanation-textarea" id="userAnswerTextarea" rows="3" placeholder="Ваша расшифровка..."></textarea>
+            <div class="text-center mt-3">
+                <button class="btn btn-main-action" id="checkMysteryButton">Проверить ответ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Сообщение обратной связи (Верно/Неверно) -->
+    <div id="mystery-feedback" class="mystery-feedback-message text-center mt-3 mb-3"></div>
+
+    <!-- Контейнер с сообщением об успехе и кнопкой завершения (изначально скрыт) -->
+    <div id="success-message-container" class="text-center mt-4 p-4 statement-card" style="display: none;">
+        <h3 class="mystery-page-title feedback-correct mb-3">Отлично! Ребус разгадан!</h3>
+        <p class="intro-text">Вы успешно справились с заданием и раскрыли тайну:</p>
+        <div class="phrase-box revealed-phrase-box mt-2 mb-3">
+             <p class="phrase-content"><strong>"незнание законов не спасает от обвинений, но понимание мотивов облегчает поиск истины."</strong></p>
+        </div>
+        <p class="intro-text">Поздравляем с успешным прохождением квеста "Мир Чехова"!</p>
+        <div class="controls-mystery text-center mt-3">
+            <a href="../index.html" class="btn btn-main-action btn-lg" id="completeQuestButton">Завершить квест</a>
+        </div>
+    </div>
+</div>
+
+    <div id="chekhov-corner">
+        <img src="../placeholder-chekhov.png" alt="Антон Чехов" title="Антон Павлович Чехов">
+    </div>
+
+    <footer class="footer mt-auto py-3">
+        <div class="container text-center">
+            <span class="text-muted">© 2024 Литературный квест "Мир Чехова". Все права защищены.</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userAnswerTextarea = document.getElementById('userAnswerTextarea');
+            const checkMysteryButton = document.getElementById('checkMysteryButton');
+            const mysteryFeedbackDiv = document.getElementById('mystery-feedback');
+            const successMessageContainer = document.getElementById('success-message-container');
+            const puzzleCard = document.getElementById('puzzleCard'); // Карточка с самим ребусом
+
+            const correctAnswer = "незнание законов не спасает от обвинений, но понимание мотивов облегчает поиск истины";
+
+            // Функция для нормализации текста
+            function normalizeText(text) {
+                if (typeof text !== 'string') return '';
+                return text.toLowerCase().replace(/\s+/g, ' ').replace(/[.,!?;:]/g, '').trim(); // Убираем знаки препинания для сравнения
+            }
+
+            // Оригинальная фраза для отображения в блоке успеха, сохраняя пунктуацию
+            const displayCorrectAnswer = "незнание законов не спасает от обвинений, но понимание мотивов облегчает поиск истины";
+
+
+            checkMysteryButton.addEventListener('click', () => {
+                const userAnswer = userAnswerTextarea.value;
+                const normalizedUserAnswer = normalizeText(userAnswer);
+                const normalizedCorrectAnswer = normalizeText(correctAnswer);
+
+                // Сбрасываем предыдущий фидбек
+                mysteryFeedbackDiv.textContent = '';
+                mysteryFeedbackDiv.className = 'mystery-feedback-message text-center mt-3 mb-3'; // Сброс классов цвета
+
+                if (normalizedUserAnswer === normalizedCorrectAnswer) {
+                    // Скрываем карточку с ребусом и поле для ввода
+                    if (puzzleCard) {
+                        puzzleCard.style.display = 'none';
+                    }
+                    // Скрываем промежуточное сообщение обратной связи
+                    mysteryFeedbackDiv.style.display = 'none';
+
+                    // Показываем контейнер с сообщением об успехе
+                    if (successMessageContainer) {
+                        // Можно обновить текст правильного ответа в блоке успеха, если он там генерируется динамически
+                        // const revealedPhraseElement = successMessageContainer.querySelector('.revealed-phrase-box .phrase-content strong');
+                        // if(revealedPhraseElement) revealedPhraseElement.textContent = displayCorrectAnswer;
+                        successMessageContainer.style.display = 'block';
+                    }
+
+                } else {
+                    mysteryFeedbackDiv.textContent = 'Ответ неверный. Попробуйте еще раз! Будьте внимательны к каждому слову.';
+                    mysteryFeedbackDiv.classList.add('feedback-incorrect');
+                    userAnswerTextarea.focus(); // Возвращаем фокус на поле ввода
+                    // Очищаем поле ввода для удобства пользователя (опционально)
+                    // userAnswerTextarea.value = '';
+                }
+            });
+
+            // Убедимся, что блок успеха скрыт при первоначальной загрузке
+            if (successMessageContainer) {
+                successMessageContainer.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
