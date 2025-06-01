@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Квест 4: Восстанови последовательность - Мир Чехова</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body class="quest-active">
+
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <img src="../logo.png" alt="Логотип Квеста" width="30" height="30"
+                    class="d-inline-block align-text-top me-2">
+                <span class="brand-main-text">Мир Чехова</span>
+                <span class="brand-tagline ms-2">| грустные оптимисты</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../1/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 1:</span>
+                            <span class="quest-title d-block">Шуточка</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../2/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 2:</span>
+                            <span class="quest-title d-block">Толстый и тонкий</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../3/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 3:</span>
+                            <span class="quest-title d-block">Злоумышленник</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../4/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 4:</span>
+                            <span class="quest-title d-block">Спать хочется</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../5/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 5:</span>
+                            <span class="quest-title d-block">Дорогая собака</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../6/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 6:</span>
+                            <span class="quest-title d-block">Пари</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../7/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 7:</span>
+                            <span class="quest-title d-block">Не в духе</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../8/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 8:</span>
+                            <span class="quest-title d-block">Биография</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main
+        class="container quest-page-container my-5 pt-4 pb-5 d-flex flex-column align-items-center justify-content-center"
+        style="min-height: calc(100vh - 140px);">
+        <div class="row w-100">
+            <div class="col-12 text-center mb-2"> <!-- Уменьшил mb с 4 до 2 -->
+                <h2 class="quest-question" id="main-question-title">Условия заключения юриста: Что было МОЖНО, а что
+                    НЕЛЬЗЯ?</h2>
+                <p class="lead text-muted">Оцените каждое утверждение.</p>
+            </div>
+        </div>
+
+        <!-- Блок для текущего утверждения и картинки -->
+        <div id="current-statement-block" class="row w-100 justify-content-center mb-3">
+            <div class="col-lg-8 col-md-10 col-12">
+                <div id="statement-card" class="card statement-card-custom text-center"> <!-- Добавил text-center -->
+                    <div class="card-body">
+                        <p id="statement-text" class="card-text fs-5 mb-3"></p> <!-- Увеличил mb -->
+                        <!-- Контейнер для изображения -->
+                        <div class="mb-3" id="image-container" style="min-height: 200px;">
+                            <!-- Минимальная высота для предотвращения скачков -->
+                            <img src="" alt="Иллюстрация к условию" id="statement-image"
+                                class="img-fluid rounded d-none" style="max-height: 300px; margin: 0 auto;">
+                        </div>
+                        <p id="explanation-text" class="card-text mt-2 small d-none"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Кнопки ответа -->
+        <div class="row w-100 justify-content-center mb-4">
+            <div class="col-5 col-sm-4 col-md-3 text-center">
+                <button id="can-button" class="btn btn-choice-custom btn-success btn-lg w-100 py-3">МОЖНО</button>
+            </div>
+            <div class="col-5 col-sm-4 col-md-3 text-center">
+                <button id="cannot-button" class="btn btn-choice-custom btn-danger btn-lg w-100 py-3">НЕЛЬЗЯ</button>
+            </div>
+        </div>
+
+        <!-- Прогресс -->
+        <div class="row w-100 mt-3">
+            <div class="col-lg-8 col-md-10 col-12 mx-auto text-center">
+                <p id="progress-text" class="text-muted mt-2 mb-1"></p>
+                <div class="progress" role="progressbar" aria-label="Прогресс ответов" aria-valuenow="0"
+                    aria-valuemin="0" aria-valuemax="100" style="height: 20px;">
+                    <div class="progress-bar bg-custom-progress" id="progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Финальная обратная связь и кнопка "Далее" -->
+        <div class="row w-100 mt-4">
+            <div class="col-12 text-center">
+                <!-- ЗАМЕНИТЕ "path/to/next_quest_page.html" на актуальный путь -->
+                <a href="quest_page_8.html" id="next-quest-button"
+                    class="btn btn-start-quest btn-lg d-none">Следующий этап</a>
+                <p id="final-feedback" class="quest-feedback-message mt-3"> </p>
+            </div>
+        </div>
+    </main>
+
+    <div id="chekhov-corner">
+        <img src="../placeholder-chekhov.png" alt="Антон Чехов" title="Антон Павлович Чехов">
+    </div>
+
+    <footer class="footer mt-auto py-3">
+        <div class="container text-center">
+            <span class="text-muted">© 2024 Литературный квест "Мир Чехова". Все права защищены.</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+        <script>
+        // ЗАМЕНИТЕ пути к картинкам на ваши реальные пути!
+        const conditionsData = [
+            { statement: "Переступать порог флигеля.", correctAnswer: false, image: "q7/image_porog.png", explanation: "Нельзя было переступать порог флигеля." },
+            { statement: "Иметь музыкальный инструмент.", correctAnswer: true, image: "q7/image_instrument.png", explanation: "Можно было иметь музыкальный инструмент." },
+            { statement: "Читать книги.", correctAnswer: true, image: "q7/image_knigi.png", explanation: "Можно было читать книги (заказывать сколько угодно)." },
+            { statement: "Слышать человеческие голоса.", correctAnswer: false, image: "q7/image_golosa.png", explanation: "Нельзя было слышать человеческие голоса." },
+            { statement: "Писать письма (но не отправлять и не получать ответ).", correctAnswer: true, image: "q7/image_pisat_pisma.png", explanation: "Можно было писать письма." }, // Уточнено условие
+            { statement: "Пить вино.", correctAnswer: true, image: "q7/image_vino.png", explanation: "Можно было пить вино." },
+            { statement: "Видеть живых людей.", correctAnswer: false, image: "q7/image_ljudi.png", explanation: "Нельзя было видеть живых людей." },
+            { statement: "Курить табак.", correctAnswer: true, image: "q7/image_tabak.png", explanation: "Можно было курить табак." },
+            { statement: "Сноситься с внешним миром через маленькое окно (молча).", correctAnswer: true, image: "q7/image_okno.png", explanation: "Можно было сноситься с внешним миром молча через окно для получения необходимого." }
+        ];
+
+        let currentConditionIndex = 0;
+        let totalCorrectlyAnsweredConditions = 0;
+        let answeredCurrentConditionThisAttempt = false; // Флаг для текущей попытки ответа на утверждение
+        let correctAnswersInRowForThisCondition = 0; // Для логики, если нужна только одна попытка на вопрос
+
+        const statementTextEl = document.getElementById('statement-text');
+        const statementImageEl = document.getElementById('statement-image');
+        const explanationTextEl = document.getElementById('explanation-text');
+        const statementCardEl = document.getElementById('statement-card');
+        const canButton = document.getElementById('can-button');
+        const cannotButton = document.getElementById('cannot-button');
+        const nextQuestButton = document.getElementById('next-quest-button');
+        const finalFeedbackEl = document.getElementById('final-feedback');
+        const progressBar = document.getElementById('progress-bar');
+        const progressTextEl = document.getElementById('progress-text');
+
+        function resetConditionState() {
+            answeredCurrentConditionThisAttempt = false;
+            statementCardEl.classList.remove('correct-answer-card', 'incorrect-answer-card');
+            explanationTextEl.classList.add('d-none');
+            explanationTextEl.textContent = '';
+            canButton.disabled = false;
+            cannotButton.disabled = false;
+            // Скрываем картинку перед загрузкой новой, чтобы не было "прыжка" старой
+            statementImageEl.classList.add('d-none');
+            statementImageEl.src = ""; // Очищаем src на всякий случай
+        }
+
+        function loadCondition() {
+            resetConditionState();
+            correctAnswersInRowForThisCondition = 0; 
+
+            if (currentConditionIndex < conditionsData.length) {
+                const currentData = conditionsData[currentConditionIndex];
+                statementTextEl.textContent = currentData.statement;
+                
+                if (currentData.image && currentData.image !== "path/to/your_image.png") { // Проверка, что путь к картинке задан и не дефолтный
+                    statementImageEl.src = currentData.image;
+                    statementImageEl.alt = `Иллюстрация: ${currentData.statement}`;
+                    statementImageEl.classList.remove('d-none');
+                } else {
+                    statementImageEl.classList.add('d-none'); // Скрыть, если нет картинки
+                }
+                updateProgress();
+            } else {
+                showFinalResult();
+            }
+        }
+
+        function updateProgress() {
+            const progressPercentage = (totalCorrectlyAnsweredConditions / conditionsData.length) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+            progressBar.setAttribute('aria-valuenow', progressPercentage);
+            progressTextEl.textContent = `Утверждение ${currentConditionIndex + 1} из ${conditionsData.length} (Верно: ${totalCorrectlyAnsweredConditions})`;
+
+            if (totalCorrectlyAnsweredConditions >= conditionsData.length) {
+                 progressTextEl.textContent = `Завершено! Верно: ${totalCorrectlyAnsweredConditions} из ${conditionsData.length}`;
+                 progressBar.classList.add('bg-success'); // Ваш CSS должен это поддерживать или используйте Bootstrap 'bg-success'
+             }
+        }
+
+        function handleAnswer(userAnswerBoolean) { // true for "МОЖНО", false for "НЕЛЬЗЯ"
+            if (answeredCurrentConditionThisAttempt) return;
+            answeredCurrentConditionThisAttempt = true;
+            canButton.disabled = true;
+            cannotButton.disabled = true;
+
+            const currentQuestion = conditionsData[currentConditionIndex];
+            explanationTextEl.textContent = currentQuestion.explanation;
+            explanationTextEl.classList.remove('d-none');
+
+            if (userAnswerBoolean === currentQuestion.correctAnswer) {
+                statementCardEl.classList.add('correct-answer-card'); // Используем ваш CSS класс
+                explanationTextEl.classList.remove('text-danger-emphasis'); // Используем ваши/Bootstrap классы
+                explanationTextEl.classList.add('text-success-emphasis');
+                
+                if (correctAnswersInRowForThisCondition === 0) { // Если это первый ПРАВИЛЬНЫЙ ответ на ЭТО утверждение
+                    totalCorrectlyAnsweredConditions++;
+                }
+                correctAnswersInRowForThisCondition++;
+
+                updateProgress();
+
+                setTimeout(() => {
+                    currentConditionIndex++;
+                    loadCondition();
+                }, 2500); // Задержка для правильного ответа перед следующим
+
+            } else {
+                statementCardEl.classList.add('incorrect-answer-card'); // Используем ваш CSS класс
+                explanationTextEl.classList.remove('text-success-emphasis');
+                explanationTextEl.classList.add('text-danger-emphasis');
+                correctAnswersInRowForThisCondition = 0; // Сброс для этого утверждения, если неверно
+
+                // Даем еще попытку через 3.5 секунды
+                setTimeout(() => {
+                    resetConditionState(); // Возвращаем карточку и кнопки в исходное состояние для новой попытки
+                    // Не увеличиваем currentConditionIndex, остаемся на том же утверждении
+                }, 3500); 
+            }
+        }
+        
+        function showFinalResult() {
+            canButton.classList.add('d-none');
+            cannotButton.classList.add('d-none');
+            document.getElementById('current-statement-block').classList.add('d-none'); // Скрываем блок с утверждением
+            
+            progressBar.style.width = '100%';
+            if (totalCorrectlyAnsweredConditions === conditionsData.length) {
+                progressTextEl.textContent = `Завершено! Все верно!`;
+                progressBar.classList.add('bg-success'); // или ваш .bg-custom-progress
+                finalFeedbackEl.textContent = 'Поздравляем! Вы точно знаете условия пари!';
+                finalFeedbackEl.className = 'quest-feedback-message correct mt-3'; // Используем ваш класс
+                nextQuestButton.classList.remove('d-none');
+            } else {
+                // Эта ветка не должна достигаться при текущей логике "исправляй, пока не будет верно"
+                progressTextEl.textContent = `Завершено. Верно: ${totalCorrectlyAnsweredConditions} из ${conditionsData.length}`;
+                finalFeedbackEl.textContent = 'Попробуйте пройти этот этап заново для лучшего результата!';
+                finalFeedbackEl.className = 'quest-feedback-message incorrect mt-3';
+                // Можно добавить кнопку для перезапуска этого конкретного квеста (этой страницы)
+                // nextQuestButton.textContent = "Попробовать еще раз";
+                // nextQuestButton.href = window.location.href; // Перезагрузка страницы
+                // nextQuestButton.classList.remove('d-none');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCondition();
+            canButton.addEventListener('click', () => handleAnswer(true));  // true означает "МОЖНО"
+            cannotButton.addEventListener('click', () => handleAnswer(false)); // false означает "НЕЛЬЗЯ"
+        });
+    </script>
+</body>
+
+</html>

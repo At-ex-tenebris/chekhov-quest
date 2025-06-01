@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Квест 4: Восстанови последовательность - Мир Чехова</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+    /* Предполагается, что переменные --bg-light, --bg-medium и т.д. определены в вашем основном style.css */
+    .cipher-quest-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        background-color: var(--bg-medium, #f5eadd);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        font-family: var(--font-primary, 'Lora', serif);
+    }
+    .cipher-quest-header {
+        font-family: var(--font-secondary, 'Merriweather', serif);
+        color: var(--accent-dark, #8B4513);
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+    }
+    .encrypted-phrase-container {
+        background-color: var(--bg-light, #fdfaf5);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        border: 1px solid var(--border-color, #dcd0c0);
+        text-align: center;
+    }
+    .encrypted-phrase {
+        font-size: 1.5rem; /* Крупные символы шифра */
+        color: var(--text-color, #4b3f31);
+        letter-spacing: 2px; /* Небольшой разнос символов */
+        word-break: break-all; /* Перенос, если не влезает */
+    }
+    .cipher-key-table-container {
+        margin-bottom: 1.5rem;
+    }
+    .cipher-key-table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: var(--bg-light, #fdfaf5);
+    }
+    .cipher-key-table th,
+    .cipher-key-table td {
+        border: 1px solid var(--border-color, #dcd0c0);
+        padding: 10px;
+        text-align: center;
+        font-size: 1.1rem; /* Размер символов и букв в таблице */
+    }
+    .cipher-key-table th {
+        background-color: var(--bg-dark, #e8d8c0);
+        color: var(--accent-dark, #8B4513);
+        font-family: var(--font-secondary, 'Merriweather', serif);
+    }
+    .cipher-symbol { /* Стиль для шифр-символов в таблице и фразе */
+        font-weight: bold;
+        color: var(--accent-dark, #8B4513);
+    }
+    .decipher-input-group {
+        margin-bottom: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .decipher-input-group label {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        color: var(--text-color, #4b3f31);
+    }
+    .decipher-input {
+        width: 100%;
+        max-width: 500px;
+        padding: 0.75rem;
+        border: 1px solid var(--border-color, #dcd0c0);
+        border-radius: 5px;
+        font-size: 1.1rem;
+        font-family: var(--font-primary, 'Lora', serif);
+    }
+    .cipher-controls {
+        text-align: center;
+    }
+    .btn-cipher-action { /* Общий стиль для кнопок */
+        background-color: var(--accent-dark, #8B4513);
+        border-color: var(--accent-dark, #8B4513);
+        color: var(--bg-light, #fdfaf5);
+        padding: 0.7rem 1.8rem;
+        font-size: 1.05rem;
+        margin: 5px;
+        border-radius: 5px;
+    }
+    .btn-cipher-action:hover {
+        background-color: var(--text-color, #4b3f31);
+        border-color: var(--text-color, #4b3f31);
+    }
+    #cipher-feedback {
+        text-align: center;
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-top: 1.5rem;
+        min-height: 30px;
+    }
+    .feedback-correct { color: green; }
+    .feedback-incorrect { color: red; }
+</style>
+
+</head>
+
+<body class="quest-active">
+
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <img src="../logo.png" alt="Логотип Квеста" width="30" height="30"
+                    class="d-inline-block align-text-top me-2">
+                <span class="brand-main-text">Мир Чехова</span>
+                <span class="brand-tagline ms-2">| грустные оптимисты</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../1/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 1:</span>
+                            <span class="quest-title d-block">Шуточка</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../2/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 2:</span>
+                            <span class="quest-title d-block">Толстый и тонкий</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../3/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 3:</span>
+                            <span class="quest-title d-block">Злоумышленник</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../4/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 4:</span>
+                            <span class="quest-title d-block">Спать хочется</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../5/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 5:</span>
+                            <span class="quest-title d-block">Дорогая собака</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../6/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 6:</span>
+                            <span class="quest-title d-block">Пари</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../7/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 7:</span>
+                            <span class="quest-title d-block">Не в духе</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../8/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 8:</span>
+                            <span class="quest-title d-block">Биография</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="cipher-quest-container">
+    <h2 class="cipher-quest-header">Расшифруйте послание!</h2>
+
+    <div class="encrypted-phrase-container">
+        <p>Зашифрованная фраза:</p>
+        <p class="encrypted-phrase" id="encryptedPhrase"></p>
+    </div>
+
+    <div class="cipher-key-table-container">
+        <p>Ключ к шифру:</p>
+        <table class="cipher-key-table">
+            <thead>
+                <tr>
+                    <th>Символ</th>
+                    <th>Буква</th>
+                    <th>Символ</th>
+                    <th>Буква</th>
+                </tr>
+            </thead>
+            <tbody id="cipherKeyBody">
+                <!-- Строки таблицы будут добавлены JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="decipher-input-group">
+        <label for="decipheredText">Ваш ответ:</label>
+        <input type="text" id="decipheredText" class="decipher-input" placeholder="Введите расшифрованную фразу">
+    </div>
+
+    <div id="cipher-feedback"></div>
+
+    <div class="cipher-controls">
+        <button class="btn btn-cipher-action" id="checkCipherButton">Проверить</button>
+        <a href="quest_page_11.html" class="btn btn-cipher-action" id="nextCipherQuestButton" style="display: none;">Следующий этап</a>
+        <!-- Замените quest_page_NEXT.html на актуальное имя следующей страницы -->
+    </div>
+</main>
+
+    <div id="chekhov-corner">
+        <img src="../placeholder-chekhov.png" alt="Антон Чехов" title="Антон Павлович Чехов">
+    </div>
+
+    <footer class="footer mt-auto py-3">
+        <div class="container text-center">
+            <span class="text-muted">© 2024 Литературный квест "Мир Чехова". Все права защищены.</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const encryptedPhraseEl = document.getElementById('encryptedPhrase');
+    const cipherKeyBodyEl = document.getElementById('cipherKeyBody');
+    const decipheredTextInput = document.getElementById('decipheredText');
+    const checkCipherButton = document.getElementById('checkCipherButton');
+    const nextCipherQuestButton = document.getElementById('nextCipherQuestButton');
+    const cipherFeedbackEl = document.getElementById('cipher-feedback');
+
+    const correctAnswer = "Решает отдать живодёрам";
+    const displayedEncryptedPhrase = "⁂※∞※€ ۞€π€⸛ ®ϟ⸖۞π※⁂ʘ";
+
+    const cipherKey = [
+        { symbol: '€', letter: 'Т' }, { symbol: 'π', letter: 'д' },
+        { symbol: '', letter: 'а' }, { symbol: '∞', letter: 'ш' },
+        { symbol: 'ʘ', letter: 'м' }, { symbol: '۞', letter: 'о' },
+        { symbol: '⸖', letter: 'в' }, { symbol: '⸛', letter: 'ь' },
+        { symbol: '⸙', letter: 'ё' }, { symbol: '※', letter: 'е' },
+        { symbol: '⁂', letter: 'р' }, { symbol: '®', letter: 'ж' },
+        { symbol: 'ϟ', letter: 'и' }
+    ];
+
+    // Отображение зашифрованной фразы
+    encryptedPhraseEl.textContent = displayedEncryptedPhrase;
+
+    // Заполнение таблицы ключей
+    function populateCipherKeyTable() {
+        cipherKeyBodyEl.innerHTML = ''; // Очищаем перед заполнением
+        for (let i = 0; i < cipherKey.length; i += 2) {
+            const row = cipherKeyBodyEl.insertRow();
+            
+            const cell1Symbol = row.insertCell();
+            cell1Symbol.classList.add('cipher-symbol');
+            cell1Symbol.textContent = cipherKey[i].symbol;
+            
+            const cell1Letter = row.insertCell();
+            cell1Letter.textContent = cipherKey[i].letter;
+
+            if (cipherKey[i + 1]) {
+                const cell2Symbol = row.insertCell();
+                cell2Symbol.classList.add('cipher-symbol');
+                cell2Symbol.textContent = cipherKey[i+1].symbol;
+
+                const cell2Letter = row.insertCell();
+                cell2Letter.textContent = cipherKey[i+1].letter;
+            } else {
+                // Если нечетное количество, добавляем пустые ячейки
+                row.insertCell().textContent = '';
+                row.insertCell().textContent = '';
+            }
+        }
+    }
+
+    populateCipherKeyTable();
+
+    checkCipherButton.addEventListener('click', () => {
+        const userAnswer = decipheredTextInput.value.trim();
+
+        // Сравнение без учета регистра и лишних пробелов
+        if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+            cipherFeedbackEl.textContent = 'Верно! Фраза расшифрована правильно!';
+            cipherFeedbackEl.className = 'feedback-correct';
+            nextCipherQuestButton.style.display = 'inline-block';
+            checkCipherButton.disabled = true;
+            decipheredTextInput.disabled = true;
+        } else {
+            cipherFeedbackEl.textContent = 'Неверно. Попробуйте еще раз!';
+            cipherFeedbackEl.className = 'feedback-incorrect';
+            nextCipherQuestButton.style.display = 'none';
+        }
+         setTimeout(() => {
+            if (userAnswer.toLowerCase() !== correctAnswer.toLowerCase()) {
+                 cipherFeedbackEl.textContent = '';
+            }
+        }, 4000);
+    });
+
+    // Опционально: сброс (если нужна кнопка сброса)
+    /*
+    const resetCipherButton = document.createElement('button');
+    resetCipherButton.textContent = 'Сбросить';
+    resetCipherButton.classList.add('btn', 'btn-cipher-action'); // Используйте свой класс для кнопки сброса, если нужно
+    resetCipherButton.style.backgroundColor = 'var(--accent-light, #d2b48c)'; // Пример другого цвета
+    resetCipherButton.style.borderColor = 'var(--accent-light, #d2b48c)';
+    resetCipherButton.style.color = 'var(--text-color, #4b3f31)';
+
+    resetCipherButton.addEventListener('click', () => {
+        decipheredTextInput.value = '';
+        decipheredTextInput.disabled = false;
+        checkCipherButton.disabled = false;
+        cipherFeedbackEl.textContent = '';
+        cipherFeedbackEl.className = '';
+        nextCipherQuestButton.style.display = 'none';
+    });
+    document.querySelector('.cipher-controls').appendChild(resetCipherButton); // Добавляем кнопку сброса
+    */
+
+});
+</script>
+</body>
+
+</html>
