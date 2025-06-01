@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Квест 4: Восстанови последовательность - Мир Чехова</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        body {
+            padding-top: 80px;
+            background-color: var(--bg-light);
+        }
+        .quest-container-reason {
+            max-width: 800px;
+            margin: 2rem auto;
+            background-color: var(--bg-medium);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .quest-header-reason {
+            font-family: var(--font-secondary);
+            color: var(--accent-dark);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+        .statement-card {
+            background-color: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .statement-text {
+            font-family: var(--font-primary);
+            color: var(--text-color);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .choice-buttons button {
+            font-family: var(--font-secondary);
+            font-weight: 500;
+            padding: 0.5rem 1.2rem;
+            margin-right: 10px;
+            border-radius: 20px; /* Более круглые кнопки */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .btn-true {
+            background-color: #28a745; /* Зеленый для "Верно" */
+            border-color: #28a745;
+            color: white;
+        }
+        .btn-true:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+            transform: translateY(-2px);
+        }
+        .btn-false {
+            background-color: #dc3545; /* Красный для "Неверно" */
+            border-color: #dc3545;
+            color: white;
+        }
+        .btn-false:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+            transform: translateY(-2px);
+        }
+        .statement-card.answered .choice-buttons button {
+            opacity: 0.7;
+            pointer-events: none; /* Блокируем кнопки после ответа */
+        }
+        .statement-card.correct-answer {
+            border-left: 5px solid green;
+        }
+        .statement-card.incorrect-answer {
+            border-left: 5px solid red;
+        }
+        .feedback-reason {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 1rem;
+            font-style: italic;
+        }
+        .controls-reason {
+            text-align: center;
+            margin-top: 2rem;
+        }
+         .btn-main-action { /* Общий стиль для кнопок "Проверить" и "Далее" */
+            background-color: var(--accent-dark);
+            border-color: var(--accent-dark);
+            color: var(--bg-light);
+            padding: 0.7rem 1.8rem;
+            font-size: 1.05rem;
+        }
+        .btn-main-action:hover {
+            background-color: var(--text-color);
+            border-color: var(--text-color);
+        }
+        #reason-quest-feedback {
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 1.5rem;
+            min-height: 30px;
+        }
+        .feedback-correct { color: green; }
+        .feedback-incorrect { color: red; }
+    </style>
+
+</head>
+
+<body class="quest-active">
+
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <img src="../logo.png" alt="Логотип Квеста" width="30" height="30"
+                    class="d-inline-block align-text-top me-2">
+                <span class="brand-main-text">Мир Чехова</span>
+                <span class="brand-tagline ms-2">| грустные оптимисты</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../1/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 1:</span>
+                            <span class="quest-title d-block">Шуточка</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../2/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 2:</span>
+                            <span class="quest-title d-block">Толстый и тонкий</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../3/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 3:</span>
+                            <span class="quest-title d-block">Злоумышленник</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../4/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 4:</span>
+                            <span class="quest-title d-block">Спать хочется</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../5/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 5:</span>
+                            <span class="quest-title d-block">Дорогая собака</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../6/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 6:</span>
+                            <span class="quest-title d-block">Пари</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../7/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 7:</span>
+                            <span class="quest-title d-block">Не в духе</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../8/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 8:</span>
+                            <span class="quest-title d-block">Биография</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container quest-container-reason">
+        <h2 class="quest-header-reason">Чем занимался Антон Павлович во время проживания в Мелихово? </h2>
+
+        <div id="statementsContainer">
+            <!-- Утверждения будут добавлены JavaScript -->
+        </div>
+        
+        <div id="reason-quest-feedback"></div>
+
+        <div class="controls-reason">
+            <!-- Кнопка "Проверить" не нужна, так как проверка происходит по каждому утверждению -->
+            <a href="quest_page_7.html" class="btn btn-main-action" id="nextReasonQuestButton" style="display: none;">Следующий этап</a>
+        </div>
+    </div>
+
+    <div id="chekhov-corner">
+        <img src="../placeholder-chekhov.png" alt="Антон Чехов" title="Антон Павлович Чехов">
+    </div>
+
+    <footer class="footer mt-auto py-3">
+        <div class="container text-center">
+            <span class="text-muted">© 2024 Литературный квест "Мир Чехова". Все права защищены.</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const statementsContainer = document.getElementById('statementsContainer');
+    const nextButton = document.getElementById('nextReasonQuestButton');
+    const overallFeedbackDiv = document.getElementById('reason-quest-feedback');
+
+    const DELAY_BEFORE_ENABLE_MS = 2500; // Задержка перед первой активацией кнопок
+    const RETRY_DELAY_MS = 3000;         // Задержка перед повторной попыткой
+
+    const statements = [
+        { id: 'statement1', text: 'Исполнял обязанности земского врача', isCorrectAnswerToQuestion: true },
+        { id: 'statement2', text: 'Инициировал строительство нескольких школ', isCorrectAnswerToQuestion: true },
+        { id: 'statement3', text: 'Участвовал в обустройстве пожарного пункта для селян и колокольни', isCorrectAnswerToQuestion: true },
+        { id: 'statement4', text: 'Ничего не делал', isCorrectAnswerToQuestion: false },
+        { id: 'statement5', text: 'Ходил по кабакам', isCorrectAnswerToQuestion: false },
+        { id: 'statement6', text: 'Был в депрессии и ни с кем не общался', isCorrectAnswerToQuestion: false },
+        { id: 'statement7', text: 'Открыл библиотеку в Таганроге', isCorrectAnswerToQuestion: true },
+        // Исправлен дубликат ID, убедитесь, что текст для statement7b уникален или это отдельный вопрос
+        { id: 'statement7b', text: 'Помогал в переписи населения на Сахалине', isCorrectAnswerToQuestion: true }, 
+        { id: 'statement8', text: 'Не написал ни одного произведения', isCorrectAnswerToQuestion: false },
+    ];
+
+    // Отслеживаем, на сколько утверждений дан правильный ответ
+    let correctlyAnsweredCount = 0;
+
+    function renderStatements() {
+        statementsContainer.innerHTML = '';
+        statements.forEach(stmt => {
+            const card = document.createElement('div');
+            card.classList.add('statement-card');
+            card.id = stmt.id;
+            // Добавляем data-атрибут для отслеживания, был ли дан верный ответ на эту карточку
+            card.dataset.answeredCorrectly = "false"; 
+
+            const textP = document.createElement('p');
+            textP.classList.add('statement-text');
+            textP.innerHTML = stmt.text;
+            card.appendChild(textP);
+
+            const buttonsDiv = document.createElement('div');
+            buttonsDiv.classList.add('choice-buttons');
+
+            const trueButton = document.createElement('button');
+            trueButton.classList.add('btn', 'btn-true');
+            trueButton.textContent = 'Верно';
+            trueButton.dataset.choice = 'true';
+            trueButton.disabled = true;
+
+            const falseButton = document.createElement('button');
+            falseButton.classList.add('btn', 'btn-false');
+            falseButton.textContent = 'Неверно';
+            falseButton.dataset.choice = 'false';
+            falseButton.disabled = true;
+
+            const individualFeedbackP = document.createElement('p'); // Индивидуальный фидбек для карточки
+            individualFeedbackP.classList.add('feedback-reason'); // Используем существующий класс или создайте новый
+            card.appendChild(individualFeedbackP);
+
+
+            setTimeout(() => {
+                if (card.dataset.answeredCorrectly === "false") { // Активируем, только если еще не ответили верно
+                    trueButton.disabled = false;
+                    falseButton.disabled = false;
+                }
+            }, DELAY_BEFORE_ENABLE_MS);
+
+            [trueButton, falseButton].forEach(button => {
+                button.addEventListener('click', (e) => {
+                    if (button.disabled || card.dataset.answeredCorrectly === "true") return; // Не обрабатывать, если кнопка заблокирована или уже ответили верно
+
+                    const chosenAnswer = e.target.dataset.choice === 'true';
+                    
+                    // Блокируем кнопки на время обработки и возможной задержки
+                    trueButton.disabled = true;
+                    falseButton.disabled = true;
+                    card.classList.remove('correct-answer', 'incorrect-answer'); // Сбрасываем подсветку перед новой попыткой
+
+                    let isUserCorrectOnThisStatement;
+                    if (stmt.isCorrectAnswerToQuestion) {
+                        isUserCorrectOnThisStatement = chosenAnswer === true;
+                    } else {
+                        isUserCorrectOnThisStatement = chosenAnswer === false;
+                    }
+
+                    if (isUserCorrectOnThisStatement) {
+                        card.classList.add('correct-answer');
+                        individualFeedbackP.textContent = 'Верно!';
+                        individualFeedbackP.style.color = 'green';
+                        if (card.dataset.answeredCorrectly === "false") { // Если это первый правильный ответ на эту карточку
+                           card.dataset.answeredCorrectly = "true";
+                           correctlyAnsweredCount++;
+                        }
+                        // Кнопки остаются disabled, так как ответ верный
+                        checkOverallCompletion();
+                    } else {
+                        card.classList.add('incorrect-answer');
+                        individualFeedbackP.textContent = 'Неверно. Попробуйте еще раз через несколько секунд...';
+                        individualFeedbackP.style.color = 'red';
+                        
+                        setTimeout(() => {
+                            if (card.dataset.answeredCorrectly === "false") { // Если все еще не ответили верно
+                                card.classList.remove('incorrect-answer');
+                                individualFeedbackP.textContent = ''; // Очищаем фидбек карточки
+                                trueButton.disabled = false; // Снова активируем кнопки
+                                falseButton.disabled = false;
+                            }
+                        }, RETRY_DELAY_MS);
+                    }
+                });
+            });
+
+            buttonsDiv.appendChild(trueButton);
+            buttonsDiv.appendChild(falseButton);
+            card.appendChild(buttonsDiv);
+            statementsContainer.appendChild(card);
+        });
+    }
+
+    function checkOverallCompletion() {
+        // Проверяем, на все ли утверждения дан правильный ответ
+        if (correctlyAnsweredCount === statements.length) {
+            overallFeedbackDiv.textContent = 'Отлично! Все утверждения оценены верно.';
+            overallFeedbackDiv.className = 'feedback-correct'; // Убедитесь, что этот класс есть в CSS
+            nextButton.style.display = 'inline-block';
+        } else {
+            overallFeedbackDiv.textContent = `Правильно оценено: ${correctlyAnsweredCount} из ${statements.length}`;
+            overallFeedbackDiv.className = 'feedback-incorrect'; // Или другой нейтральный класс
+            nextButton.style.display = 'none';
+        }
+    }
+            
+    renderStatements();
+    checkOverallCompletion(); // Первоначальный вызов для отображения счета 0 из N
+});
+</script>
+</body>
+
+</html>

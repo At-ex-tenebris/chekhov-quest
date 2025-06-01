@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Квест 3: Верно/Неверно "Шуточка" - Мир Чехова</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css"> <!-- Путь к общему CSS -->
+</head>
+<body class="quest-active">
+
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <img src="../logo.png" alt="Логотип Квеста" width="30" height="30" class="d-inline-block align-text-top me-2">
+                <span class="brand-main-text">Мир Чехова</span>
+                <span class="brand-tagline ms-2">| грустные оптимисты</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../1/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 1:</span>
+                            <span class="quest-title d-block">Шуточка</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../2/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 2:</span>
+                            <span class="quest-title d-block">Толстый и тонкий</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../3/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 3:</span>
+                            <span class="quest-title d-block">Злоумышленник</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../4/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 4:</span>
+                            <span class="quest-title d-block">Спать хочется</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../5/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 5:</span>
+                            <span class="quest-title d-block">Дорогая собака</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../6/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 6:</span>
+                            <span class="quest-title d-block">Пари</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../7/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 7:</span>
+                            <span class="quest-title d-block">Не в духе</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../8/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 8:</span>
+                            <span class="quest-title d-block">Биография</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+        <main class="container quest-page-container my-5 pt-4 pb-5 d-flex flex-column align-items-center justify-content-center" style="min-height: calc(100vh - 140px);">
+        <div class="row w-100">
+            <div class="col-12 text-center mb-4">
+                <h2 class="quest-question">Что было причиной «неприятного чувства» у Прачкина?</h2>
+            </div>
+        </div>
+
+        <div class="row w-100 justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="list-group" id="answer-options">
+                    <button type="button" class="list-group-item list-group-item-action fs-5 py-3 my-1 option-button" data-correct="false">
+                        Его предали друзья
+                    </button>
+                    <button type="button" class="list-group-item list-group-item-action fs-5 py-3 my-1 option-button" data-correct="false">
+                        Он потерял дорогую вещь
+                    </button>
+                    <button type="button" class="list-group-item list-group-item-action fs-5 py-3 my-1 option-button" data-correct="true">
+                        Он проиграл деньги
+                    </button>
+                    <button type="button" class="list-group-item list-group-item-action fs-5 py-3 my-1 option-button" data-correct="false">
+                        Его сын разбил стекло
+                    </button>
+                    <button type="button" class="list-group-item list-group-item-action fs-5 py-3 my-1 option-button" data-correct="false">
+                        Ссора с незнакомцем
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row w-100 mt-4">
+            <div class="col-12 text-center">
+                <button id="check-answer-btn" class="btn btn-primary btn-lg px-5" disabled>Проверить</button>
+                <p id="quest-feedback" class="quest-feedback-message fs-4 mt-3"> </p> <!-- Увеличил размер шрифта для фидбека -->
+                <!-- ЗАМЕНИТЕ "path/to/next_quest_page.html" на актуальный путь к следующей странице -->
+                <a href="quest_page_4.html" id="next-quest-button" class="btn btn-start-quest btn-lg d-none mt-2">Следующий вопрос</a>
+            </div>
+        </div>
+    </main>
+
+    <div id="chekhov-corner">
+        <img src="../placeholder-chekhov.png" alt="Антон Чехов" title="Антон Павлович Чехов">
+    </div>
+
+    <footer class="footer mt-auto py-3">
+        <div class="container text-center">
+            <span class="text-muted">© 2024 Литературный квест "Мир Чехова". Все права защищены.</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+            <script>
+        const optionsContainer = document.getElementById('answer-options');
+        const optionButtons = optionsContainer.querySelectorAll('.option-button');
+        const checkAnswerBtn = document.getElementById('check-answer-btn');
+        const feedbackEl = document.getElementById('quest-feedback');
+        const nextQuestButton = document.getElementById('next-quest-button');
+
+        let selectedOption = null;
+        let questionAnsweredCorrectly = false; // Флаг, что на вопрос дан верный ответ
+        let isRetrying = false; // Флаг, что идет задержка перед повторной попыткой
+
+        optionButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Не даем выбирать, если вопрос уже решен или идет задержка
+                if (questionAnsweredCorrectly || isRetrying) return;
+
+                if (selectedOption) {
+                    selectedOption.classList.remove('active');
+                }
+                
+                this.classList.add('active');
+                selectedOption = this;
+                
+                checkAnswerBtn.disabled = false;
+            });
+        });
+
+        checkAnswerBtn.addEventListener('click', function() {
+            if (!selectedOption || questionAnsweredCorrectly || isRetrying) return;
+
+            // Временно блокируем кнопки, пока обрабатывается ответ
+            isRetrying = true; // Используем этот флаг, чтобы блокировать клики во время обработки/задержки
+            checkAnswerBtn.disabled = true;
+            optionButtons.forEach(btn => btn.disabled = true);
+
+            const isCorrect = selectedOption.dataset.correct === 'true';
+
+            if (isCorrect) {
+                questionAnsweredCorrectly = true; // Вопрос решен правильно
+                selectedOption.classList.remove('active');
+                selectedOption.classList.add('correct-answer');
+                feedbackEl.textContent = 'Верно!';
+                feedbackEl.className = 'quest-feedback-message correct fs-4 mt-3';
+                nextQuestButton.classList.remove('d-none'); // Показываем кнопку "Следующий вопрос"
+                // Кнопки остаются заблокированными, так как вопрос решен
+            } else {
+                selectedOption.classList.add('incorrect-answer');
+                feedbackEl.textContent = 'Неверно. Попробуйте еще раз через 3 секунды...';
+                feedbackEl.className = 'quest-feedback-message incorrect fs-4 mt-3';
+
+                // Сброс для повторной попытки через 3 секунды
+                setTimeout(() => {
+                    if (selectedOption) { // Убедимся, что selectedOption все еще существует
+                        selectedOption.classList.remove('incorrect-answer');
+                        selectedOption.classList.remove('active'); // Также убираем 'active' на случай, если он остался
+                    }
+                    
+                    selectedOption = null; // Сбрасываем выбор
+                    feedbackEl.textContent = ' '; // Очищаем фидбек
+                    feedbackEl.className = 'quest-feedback-message fs-4 mt-3'; // Сбрасываем классы фидбека
+                    
+                    optionButtons.forEach(btn => btn.disabled = false); // Снова активируем все варианты
+                    // Кнопка "Проверить" остается disabled, т.к. новый выбор еще не сделан
+                    
+                    isRetrying = false; // Завершаем состояние задержки/повторной попытки
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
