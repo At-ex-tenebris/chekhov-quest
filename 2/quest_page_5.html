@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Квест 3: Верно/Неверно "Шуточка" - Мир Чехова</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css"> <!-- Путь к общему CSS -->
+</head>
+<body class="quest-active">
+
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <img src="../logo.png" alt="Логотип Квеста" width="30" height="30" class="d-inline-block align-text-top me-2">
+                <span class="brand-main-text">Мир Чехова</span>
+                <span class="brand-tagline ms-2">| грустные оптимисты</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../1/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 1:</span>
+                            <span class="quest-title d-block">Шуточка</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../2/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 2:</span>
+                            <span class="quest-title d-block">Толстый и тонкий</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../3/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 3:</span>
+                            <span class="quest-title d-block">Злоумышленник</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../4/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 4:</span>
+                            <span class="quest-title d-block">Спать хочется</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../5/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 5:</span>
+                            <span class="quest-title d-block">Дорогая собака</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../6/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 6:</span>
+                            <span class="quest-title d-block">Пари</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../7/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 7:</span>
+                            <span class="quest-title d-block">Не в духе</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../8/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 8:</span>
+                            <span class="quest-title d-block">Биография</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container quest-page-container my-5 pt-4 pb-5 d-flex flex-column align-items-center justify-content-center" style="min-height: calc(100vh - 140px);">
+        <!-- 140px - примерная высота навбара и футера, чтобы контент центрировался по вертикали -->
+        <div class="row w-100">
+            <div class="col-12 text-center mb-4">
+                <h2 class="quest-question">Вокзальные слухи: Правда или вымысел?</h2>
+                <p class="lead text-muted">После встречи Толстого и Тонкого по Николаевскому вокзалу поползли самые разные слухи и домыслы. Некоторые из них правдивы, как паровозный гудок, а другие – ложны, как улыбка чиновника. Ваша задача – отделить правду от вымысла, опираясь на текст рассказа. За каждое правильно угаданное утверждение вы приблизитесь к разгадке тайны!</p>
+            </div>
+        </div>
+
+        <div class="row w-100 flex-grow-1 align-items-center justify-content-center">
+            <div class="col-3 col-md-2 text-center">
+                <button id="false-button" class="btn btn-choice btn-lg btn-custom-false w-100">Не верю</button>
+            </div>
+
+            <div class="col-6 col-md-6">
+                <div id="statement-card" class="card statement-card-custom">
+                    <div class="card-body text-center">
+                        <p id="statement-text" class="card-text fs-5"></p>
+                        <p id="explanation-text" class="card-text mt-2 small d-none"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-3 col-md-2 text-center">
+                <button id="true-button" class="btn btn-choice btn-lg btn-custom-true w-100">Верю</button>
+            </div>
+        </div>
+        
+        <div class="row w-100 mt-4">
+            <div class="col-12 text-center">
+                 <p id="progress-text" class="text-muted mt-2 mb-1"></p>
+                 <div class="progress" role="progressbar" aria-label="Прогресс ответов" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="height: 20px;">
+                    <div class="progress-bar bg-custom-progress" id="progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row w-100 mt-4">
+            <div class="col-12 text-center">
+                <!-- Кнопка "Следующий этап" изначально скрыта -->
+                <a href="quest_page_6.html" id="next-quest-button" class="btn btn-start-quest btn-lg d-none">Следующий этап</a>
+                <p id="final-feedback" class="quest-feedback-message mt-3"> </p>
+            </div>
+        </div>
+    </main>
+
+    <div id="chekhov-corner">
+        <img src="../placeholder-chekhov.png" alt="Антон Чехов" title="Антон Павлович Чехов">
+    </div>
+
+    <footer class="footer mt-auto py-3">
+        <div class="container text-center">
+            <span class="text-muted">© 2024 Литературный квест "Мир Чехова". Все права защищены.</span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        const trueFalseData = [
+            { statement: "Встреча героев произошла на Ярославском вокзале", correctAnswer: false, explanation: "Встреча произошла на Николаевском вокзале" },
+            { statement: "Толстого в гимназии дразнили Эфиальтом за то, что он любил ябедничать", correctAnswer: false, explanation: "Эфиальтом дразнили Тонкого. Толстого дразнили Геростратом за то, что он казенную книжку папироской прожег." },
+            { statement: "От Толстого пахло дорогими французскими духами и сигарами", correctAnswer: false, explanation: " От Толстого пахло хересом и флердоранжем. (От Тонкого – ветчиной и кофейной гущей)" },
+            { statement: "Тонкий дослужился до чина действительного статского советника", correctAnswer: false, explanation: "Тонкий был коллежским асессором" },
+            { statement: "Жену Тонкого звали Луиза, и она была урожденная Ванценбах, лютеранка", correctAnswer: true, explanation: "Верно" },
+            { statement: "Сын Тонкого, Нафанаил, учился во втором классе гимназии", correctAnswer: false, explanation: "Неверно. Нафанаил учился в третьем классе" },
+            { statement: "Тонкий с гордостью рассказывал, что сам смастерил из дерева портсигар", correctAnswer: true, explanation: "Верно." },
+            { statement: "Узнав о высоком чине друга, Тонкий ничуть не изменился в поведении, оставшись таким же искренним", correctAnswer: false, explanation: "Тонкий кардинально изменился, стал подобострастным и угодливым" },
+            { statement: "Толстый был очень польщен и рад подобострастному поведению Тонкого", correctAnswer: false, explanation: "Толстого \"стошнило\", он \"поморщился\"" },
+            { statement: "Толстый имел чин тайного советника и носил две звезды (ордена)", correctAnswer: true, explanation: "Верно." },
+        ];
+
+        let currentQuestionIndex = 0;
+        let correctAnswersInARow = 0; // Считаем правильные ответы подряд для текущего вопроса
+        let totalCorrectlyAnsweredQuestions = 0; // Считаем уникальные правильно отвеченные вопросы
+        let answeredCurrentQuestionThisAttempt = false; // Флаг для текущей попытки ответа на вопрос
+
+        const statementTextEl = document.getElementById('statement-text');
+        const explanationTextEl = document.getElementById('explanation-text');
+        const statementCardEl = document.getElementById('statement-card');
+        const trueButton = document.getElementById('true-button');
+        const falseButton = document.getElementById('false-button');
+        const nextQuestButton = document.getElementById('next-quest-button');
+        const finalFeedbackEl = document.getElementById('final-feedback');
+        const progressBar = document.getElementById('progress-bar');
+        const progressTextEl = document.getElementById('progress-text');
+
+        function resetQuestionState() {
+            answeredCurrentQuestionThisAttempt = false;
+            statementCardEl.classList.remove('correct-answer-card', 'incorrect-answer-card');
+            explanationTextEl.classList.add('d-none');
+            explanationTextEl.textContent = '';
+            trueButton.disabled = false;
+            falseButton.disabled = false;
+        }
+
+        function loadQuestion() {
+            resetQuestionState();
+            correctAnswersInARow = 0; // Сбрасываем счетчик правильных ответов для нового вопроса
+
+            if (currentQuestionIndex < trueFalseData.length) {
+                statementTextEl.textContent = trueFalseData[currentQuestionIndex].statement;
+                updateProgress();
+            } else {
+                showFinalResult();
+            }
+        }
+
+        function updateProgress() {
+            // Прогресс теперь зависит от количества уникально правильно отвеченных вопросов
+            const progressPercentage = (totalCorrectlyAnsweredQuestions / trueFalseData.length) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+            progressBar.setAttribute('aria-valuenow', progressPercentage);
+            progressTextEl.textContent = `Вопрос ${currentQuestionIndex + 1} из ${trueFalseData.length} (Верно: ${totalCorrectlyAnsweredQuestions})`;
+
+            if (totalCorrectlyAnsweredQuestions >= trueFalseData.length) {
+                 progressTextEl.textContent = `Завершено! Верно: ${totalCorrectlyAnsweredQuestions} из ${trueFalseData.length}`;
+                 progressBar.style.width = `100%`;
+                 progressBar.classList.add('bg-success');
+             }
+        }
+
+        function handleAnswer(userAnswer) {
+            if (answeredCurrentQuestionThisAttempt) return;
+            answeredCurrentQuestionThisAttempt = true;
+            trueButton.disabled = true;
+            falseButton.disabled = true;
+
+            const currentQuestion = trueFalseData[currentQuestionIndex];
+            explanationTextEl.textContent = currentQuestion.explanation;
+            explanationTextEl.classList.remove('d-none');
+
+            if (userAnswer === currentQuestion.correctAnswer) {
+                statementCardEl.classList.add('correct-answer-card');
+                explanationTextEl.classList.remove('text-danger-emphasis');
+                explanationTextEl.classList.add('text-success-emphasis');
+                
+                // Если это первый правильный ответ на этот вопрос, увеличиваем общий счетчик
+                if (correctAnswersInARow === 0) {
+                    totalCorrectlyAnsweredQuestions++;
+                }
+                correctAnswersInARow++; // Увеличиваем счетчик правильных ответов для текущего вопроса
+
+                updateProgress(); // Обновляем прогресс сразу
+
+                setTimeout(() => {
+                    currentQuestionIndex++;
+                    loadQuestion();
+                }, 2500); // 2.5 секунды задержка для правильного ответа
+
+            } else {
+                statementCardEl.classList.add('incorrect-answer-card');
+                explanationTextEl.classList.remove('text-success-emphasis');
+                explanationTextEl.classList.add('text-danger-emphasis');
+                correctAnswersInARow = 0; // Сбрасываем счетчик, если ответ неверный
+
+                // Даем еще попытку через несколько секунд
+                setTimeout(() => {
+                    resetQuestionState(); // Возвращаем карточку и кнопки в исходное состояние для новой попытки
+                    // Не увеличиваем currentQuestionIndex, остаемся на том же вопросе
+                }, 3500); // 3.5 секунды задержка для неверного ответа, чтобы пользователь успел прочитать
+            }
+        }
+        
+        function showFinalResult() {
+            trueButton.classList.add('d-none');
+            falseButton.classList.add('d-none');
+            statementCardEl.classList.add('d-none');
+            progressTextEl.textContent = `Завершено! Верно: ${totalCorrectlyAnsweredQuestions} из ${trueFalseData.length}`;
+            progressBar.style.width = '100%';
+            progressBar.classList.add('bg-success');
+
+
+            // Так как мы требуем, чтобы все вопросы были отвечены правильно для перехода,
+            // showFinalResult вызывается только когда currentQuestionIndex >= trueFalseData.length.
+            // А это происходит только после правильного ответа на последний вопрос.
+            // Значит, totalCorrectlyAnsweredQuestions должен быть равен trueFalseData.length.
+            finalFeedbackEl.textContent = 'Поздравляем! Вы ответили на все вопросы верно!';
+            finalFeedbackEl.className = 'quest-feedback-message correct';
+            nextQuestButton.classList.remove('d-none');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadQuestion();
+            trueButton.addEventListener('click', () => handleAnswer(true));
+            falseButton.addEventListener('click', () => handleAnswer(false));
+        });
+    </script>
+</body>
+</html>
