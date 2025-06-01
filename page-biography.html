@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Биография А.П. Чехова - Мир Чехова</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <!-- Custom CSS (убедитесь, что путь правильный) -->
+    <link rel="stylesheet" href="../style.css"> 
+
+    <style>
+        body {
+            padding-top: 80px; /* Отступ для фиксированной навигации */
+            background-color: var(--bg-light);
+        }
+        .biography-page-container {
+            max-width: 900px; /* Ограничиваем ширину для лучшей читаемости */
+            margin: 2rem auto; /* Центрируем и добавляем отступы сверху/снизу */
+            background-color: var(--bg-medium); /* Фон для основного контента */
+            padding: 2.5rem 3rem; /* Внутренние отступы */
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(75, 63, 49, 0.1); /* Более мягкая тень */
+        }
+        .biography-header {
+            font-family: var(--font-secondary);
+            color: var(--accent-dark);
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 2.8rem; /* Крупный заголовок */
+            /* Можно добавить легкую тень или обводку, если хочется */
+            /* text-shadow: 1px 1px 0px var(--bg-light); */
+        }
+        .biography-intro {
+            font-family: var(--font-primary);
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+        }
+        .biography-content p {
+            font-family: var(--font-primary);
+            color: var(--text-color);
+            font-size: 1.1rem; /* Размер текста чуть больше стандартного */
+            line-height: 1.9; /* Увеличенный межстрочный интервал для читаемости */
+            margin-bottom: 1.5rem; /* Отступы между абзацами */
+            text-align: justify; /* Выравнивание по ширине */
+        }
+        .biography-content p::first-letter { /* Буквица для первого абзаца (опционально) */
+            /* font-size: 2.5em; */
+            /* float: left; */
+            /* margin-right: 0.1em; */
+            /* line-height: 0.8; */
+            /* color: var(--accent-dark); */
+            /* font-family: var(--font-secondary); */
+        }
+        .biography-content strong { /* Выделение важных имен и названий */
+            font-weight: 600;
+            color: var(--accent-dark);
+        }
+        .timeline-divider { /* Декоративный разделитель между периодами жизни */
+            text-align: center;
+            margin: 2.5rem 0;
+        }
+        .timeline-divider::before,
+        .timeline-divider::after {
+            content: "";
+            display: inline-block;
+            width: 30%;
+            height: 1px;
+            background-color: var(--border-color);
+            vertical-align: middle;
+            margin: 0 10px;
+        }
+        .timeline-divider-icon { /* Иконка между линиями разделителя */
+            font-size: 1.5rem;
+            color: var(--accent-light);
+            /* Пример иконки (можно использовать FontAwesome или SVG) */
+            /* content: "\2766"; Unicode символ */
+        }
+
+        .highlighted-period { /* Для выделения ключевых периодов, если нужно */
+            background-color: rgba(245, 234, 221, 0.5); /* --bg-medium с прозрачностью */
+            padding: 1rem;
+            margin: 1.5rem -1rem; /* Выход за пределы основного padding */
+            border-left: 3px solid var(--accent-light);
+            border-radius: 0 6px 6px 0;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 991.98px) {
+            .biography-page-container {
+                padding: 2rem 2rem;
+            }
+            .biography-header {
+                font-size: 2.4rem;
+            }
+        }
+        @media (max-width: 767.98px) {
+            .biography-page-container {
+                padding: 1.5rem 1rem;
+                margin: 1.5rem auto;
+            }
+            .biography-header {
+                font-size: 2rem;
+            }
+            .biography-intro {
+                font-size: 1.1rem;
+            }
+            .biography-content p {
+                font-size: 1rem;
+                line-height: 1.8;
+                text-align: left; /* На мобильных лучше выравнивание по левому краю */
+            }
+            .timeline-divider::before,
+            .timeline-divider::after {
+                width: 25%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Навигационная панель (такая же, как на других страницах) -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <img src="../logo.png" alt="Логотип Квеста" width="30" height="30"
+                    class="d-inline-block align-text-top me-2">
+                <span class="brand-main-text">Мир Чехова</span>
+                <span class="brand-tagline ms-2">| грустные оптимисты</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../1/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 1:</span>
+                            <span class="quest-title d-block">Шуточка</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../2/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 2:</span>
+                            <span class="quest-title d-block">Толстый и тонкий</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../3/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 3:</span>
+                            <span class="quest-title d-block">Злоумышленник</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../4/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 4:</span>
+                            <span class="quest-title d-block">Спать хочется</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../5/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 5:</span>
+                            <span class="quest-title d-block">Дорогая собака</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../6/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 6:</span>
+                            <span class="quest-title d-block">Пари</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../7/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 7:</span>
+                            <span class="quest-title d-block">Не в духе</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../8/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 8:</span>
+                            <span class="quest-title d-block">Биография</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основное содержимое страницы -->
+    <div class="container biography-page-container">
+        <header>
+            <h1 class="biography-header">Антон Павлович Чехов</h1>
+            <p class="biography-intro">Жизненный и творческий путь великого русского писателя и драматурга.</p>
+        </header>
+
+        <article class="biography-content">
+            <p>
+                Антон Павлович Чехов, выдающийся русский писатель, драматург и врач, родился <strong>17 (29) января 1860 года</strong> в <strong>Таганроге</strong>. Его отец, <strong>Павел Егорович</strong>, был купцом третьей гильдии, а мать, <strong>Евгения Яковлевна</strong>, происходила из купеческой семьи Морозовых. Антон был третьим из шести детей в семье.
+            </p>
+            <p>
+                Детство Чехова было омрачено строгим воспитанием и необходимостью помогать отцу в бакалейной лавке. Ежедневно братья Чеховы вставали в пять утра, чтобы петь в <strong>церковном хоре</strong>, а после школы должны были изучать ремесло – Антон, например, осваивал профессию портного. Несмотря на суровость отца, мать прививала детям отзывчивость, уважение к слабым и любовь к природе.
+            </p>
+
+            <div class="timeline-divider"><span class="timeline-divider-icon">❖</span></div>
+
+            <p>
+                В <strong>1868 году</strong> Чехов поступил в <strong>таганрогскую гимназию</strong>, где получил свой первый литературный псевдоним – <strong>Чехонте</strong>. В 13 лет он впервые побывал в театре, что зародило в нем глубокую любовь к сцене и литературе. В гимназические годы он начал писать очерки и создал свою первую пьесу "Безотцовщина".
+            </p>
+            <p>
+                В <strong>1876 году</strong> отец Чехова разорился, и семья переехала в Москву. Антон, оставшись в Таганроге для завершения учебы, зарабатывал на жизнь <strong>репетиторством</strong>. Окончив гимназию в <strong>1879 году</strong>, он переехал в Москву и поступил на медицинский факультет Московского университета. Одновременно с учебой он начал публиковать свои первые юмористические рассказы и фельетоны в журналах <strong>"Стрекоза"</strong>, <strong>"Будильник"</strong>, <strong>"Осколки"</strong>, используя псевдонимы, такие как <strong>Антоша Чехонте</strong> и <strong>Человек без селезенки</strong>.
+            </p>
+
+            <div class="timeline-divider"><span class="timeline-divider-icon">❖</span></div>
+            
+            <div class="highlighted-period">
+                <p>
+                    В <strong>1884 году</strong> Чехов окончил университет и начал врачебную практику, совмещая ее с литературной деятельностью. Его первый сборник рассказов <strong>"Сказки Мельпомены"</strong> вышел в том же году. К <strong>1885 году</strong> он уже был популярным автором коротких рассказов, но критика со стороны Дмитрия Григоровича и других литераторов побудила его обратить внимание на более серьезные темы и жанры. Сотрудничество с издателем <strong>Алексеем Сувориным</strong> и его журналом <strong>"Новое время"</strong> способствовало раскрытию таланта Чехова, и он начал подписывать свои произведения собственным именем.
+                </p>
+            </div>
+
+            <p>
+                В <strong>1887 году</strong> Чехов совершил путешествие по Приазовью, которое вдохновило его на написание повести <strong>"Степь"</strong>. Эта повесть, опубликованная в журнале "Северный вестник", была хорошо принята публикой и критиками. В том же году в московском театре Корша была поставлена его первая пьеса <strong>"Иванов"</strong>. В <strong>1888 году</strong> сборник <strong>"В сумерках"</strong> был удостоен Пушкинской премии Академии наук.
+            </p>
+            <p>
+                В <strong>1890 году</strong> Чехов предпринял длительное путешествие на <strong>остров Сахалин</strong> для изучения быта каторжников и ссыльных. Он провел перепись населения острова, заполнив тысячи карточек. Результатом этой поездки стала книга <strong>"Остров Сахалин"</strong>, опубликованная через пять лет. Это путешествие оказало значительное влияние на его последующее творчество.
+            </p>
+
+            <div class="timeline-divider"><span class="timeline-divider-icon">❖</span></div>
+
+            <p>
+                Вернувшись из Сахалина, Чехов поселился в Москве, а затем, в <strong>1892 году</strong>, приобрел имение в <strong>Мелихове</strong>. Там он не только продолжал писать, но и активно занимался общественной деятельностью: открыл медицинский пункт, строил школы, помогал голодающим и работал санитарным врачом во время эпидемии холеры. В мелиховский период были написаны такие известные произведения, как <strong>"Палата № 6"</strong>, <strong>"Чайка"</strong>, <strong>"Человек в футляре"</strong>.
+            </p>
+            <p>
+                В последние годы жизни у Чехова обострился туберкулез, и он переехал в <strong>Ялту</strong>, где построил дачу. В <strong>1901 году</strong> он женился на актрисе <strong>Ольге Книппер</strong>. Несмотря на болезнь, Чехов продолжал писать, создав пьесы <strong>"Три сестры"</strong>, <strong>"Вишневый сад"</strong> и рассказ <strong>"Дама с собачкой"</strong>.
+            </p>
+            
+            <div class="timeline-divider"><span class="timeline-divider-icon">❖</span></div>
+
+            <p>
+                Антон Павлович Чехов скончался <strong>2 (15) июля 1904 года</strong> в немецком курортном городе <strong>Баденвайлер</strong>. Его творчество, насчитывающее более 500 произведений, оказало огромное влияние на мировую литературу и театр. Пьесы Чехова до сих пор ставятся на сценах театров по всему миру, а его рассказы и повести переведены на множество языков.
+            </p>
+        </article>
+
+    </div>
+
+    <!-- Подвал (если нужен) -->
+    <footer class="footer mt-auto py-3"> <!-- mt-auto для прижатия к низу, если контента мало -->
+        <div class="container text-center">
+            <span class="text-muted">© 2024 Литературный квест "Мир Чехова".</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Специфичный JS для этой страницы не требуется, если нет интерактивных элементов -->
+</body>
+</html>

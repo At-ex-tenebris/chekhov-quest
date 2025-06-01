@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аудиокниги А.П. Чехова - Мир Чехова</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <!-- Custom CSS (убедитесь, что путь правильный) -->
+    <link rel="stylesheet" href="../style.css"> 
+
+    <style>
+        body {
+            padding-top: 80px; /* Отступ для фиксированной навигации */
+            background-color: var(--bg-light);
+        }
+        .audio-page-header {
+            font-family: var(--font-secondary);
+            color: var(--accent-dark);
+            text-align: center;
+            margin-top: 2rem;
+            margin-bottom: 2.5rem;
+            font-size: 2.2rem;
+        }
+        .audiobook-list-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .audiobook-item {
+            background-color: var(--bg-medium);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(75, 63, 49, 0.08);
+        }
+        .audiobook-title {
+            font-family: var(--font-secondary);
+            color: var(--text-color);
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .audiobook-number {
+            font-family: var(--font-primary);
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        .audio-player-container audio {
+            width: 100%; /* Растягиваем стандартный плеер на всю ширину */
+            border-radius: 6px;
+            /* Можно добавить кастомные стили для плеера, но это сложнее и зависит от браузера */
+            /* Например, скрыть некоторые элементы управления, если это возможно */
+        }
+        /* Стили для подвала, если он будет */
+        .footer {
+            background-color: var(--bg-medium);
+            border-top: 1px solid var(--border-color);
+            padding: 1.5rem 0;
+            margin-top: 3rem; /* Отступ сверху для подвала */
+        }
+
+        /* Адаптивность */
+        @media (max-width: 767.98px) {
+            .audio-page-header {
+                font-size: 1.8rem;
+                margin-bottom: 2rem;
+            }
+            .audiobook-item {
+                padding: 1rem;
+            }
+            .audiobook-title {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Навигационная панель (такая же, как на других страницах) -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <img src="../logo.png" alt="Логотип Квеста" width="30" height="30"
+                    class="d-inline-block align-text-top me-2">
+                <span class="brand-main-text">Мир Чехова</span>
+                <span class="brand-tagline ms-2">| грустные оптимисты</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../1/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 1:</span>
+                            <span class="quest-title d-block">Шуточка</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../2/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 2:</span>
+                            <span class="quest-title d-block">Толстый и тонкий</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../3/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 3:</span>
+                            <span class="quest-title d-block">Злоумышленник</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../4/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 4:</span>
+                            <span class="quest-title d-block">Спать хочется</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../5/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 5:</span>
+                            <span class="quest-title d-block">Дорогая собака</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../6/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 6:</span>
+                            <span class="quest-title d-block">Пари</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../7/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 7:</span>
+                            <span class="quest-title d-block">Не в духе</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../8/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 8:</span>
+                            <span class="quest-title d-block">Биография</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основное содержимое страницы -->
+    <div class="container audiobook-list-container">
+        <h1 class="audio-page-header">Аудиокниги А.П. Чехова</h1>
+
+        <!-- Список аудиокниг -->
+        <div id="audiobookList">
+            <!-- Аудиокниги будут добавлены сюда с помощью JavaScript -->
+        </div>
+    </div>
+
+    <!-- Подвал (если нужен) -->
+    <footer class="footer">
+        <div class="container text-center">
+            <span class="text-muted">© 2024 Литературный квест "Мир Чехова".</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const audiobookListDiv = document.getElementById('audiobookList');
+
+            // Массив с данными аудиокниг
+            // ВАЖНО: Замените placeholder_audio_url_X.mp3 на реальные URL-адреса ваших аудиофайлов!
+            const audiobooks = [
+                { number: 1, title: 'Шуточка', audioUrl: 'https://s11.knigavuhe.org/1/audio/28115/mobile/shutochka-0.mp3' }, // Пример, замените!
+                { number: 2, title: 'Толстый и тонкий', audioUrl: 'https://s1.knigavuhe.org/1/audio/23211/mobile2/tolstyjj-i-tonkijj-0.mp3' },
+                { number: 3, title: 'Злоумышленник', audioUrl: 'https://s10.knigavuhe.org/1/audio/37941/mobile/zloumyshlennik-0.mp3' },
+                { number: 4, title: 'Спать хочется', audioUrl: 'https://s12.knigavuhe.org/1/audio/35312/mobile/spat-khochetsja-0.mp3' },
+                { number: 5, title: 'Дорогая собака', audioUrl: 'https://s10.knigavuhe.org/1/audio/38251/dorogaja-sobaka.mp3' },
+                { number: 6, title: 'Пари', audioUrl: 'https://s12.knigavuhe.org/1/audio/29792/mobile/pari-0.mp3' },
+                { number: 7, title: 'Не в духе', audioUrl: 'https://moosic.my.mail.ru/file/06c6934ae421a76c7d986d7afcf9c0ff.mp3' }
+            ];
+
+            audiobooks.forEach(book => {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('audiobook-item');
+
+                const numberP = document.createElement('p');
+                numberP.classList.add('audiobook-number');
+                numberP.textContent = `Произведение №${book.number}`;
+                itemDiv.appendChild(numberP);
+
+                const titleH2 = document.createElement('h2');
+                titleH2.classList.add('audiobook-title');
+                titleH2.textContent = book.title;
+                itemDiv.appendChild(titleH2);
+
+                const playerContainer = document.createElement('div');
+                playerContainer.classList.add('audio-player-container');
+
+                const audioPlayer = document.createElement('audio');
+                audioPlayer.setAttribute('controls', ''); // Добавляем стандартные элементы управления
+                // audioPlayer.setAttribute('preload', 'metadata'); // Загружать только метаданные для экономии трафика
+
+                const sourceElement = document.createElement('source');
+                sourceElement.setAttribute('src', book.audioUrl);
+                sourceElement.setAttribute('type', 'audio/mpeg'); // Укажите правильный MIME-тип, если он другой
+
+                audioPlayer.appendChild(sourceElement);
+                // Текст для браузеров, не поддерживающих тег audio
+                audioPlayer.appendChild(document.createTextNode('Ваш браузер не поддерживает воспроизведение аудио.')); 
+                
+                playerContainer.appendChild(audioPlayer);
+                itemDiv.appendChild(playerContainer);
+
+                audiobookListDiv.appendChild(itemDiv);
+            });
+        });
+    </script>
+</body>
+</html>

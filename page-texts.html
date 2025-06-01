@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тексты рассказов А.П. Чехова - Мир Чехова</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <!-- Custom CSS (убедитесь, что путь правильный) -->
+    <link rel="stylesheet" href="../style.css"> 
+
+    <style>
+        body {
+            padding-top: 80px; /* Отступ для фиксированной навигации */
+            background-color: var(--bg-light);
+        }
+        .stories-page-header {
+            font-family: var(--font-secondary);
+            color: var(--accent-dark);
+            text-align: center;
+            margin-top: 2rem;
+            margin-bottom: 2.5rem;
+            font-size: 2.2rem;
+        }
+        .stories-intro {
+            font-family: var(--font-primary);
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .story-list-container {
+            max-width: 800px; /* Ограничиваем ширину списка для лучшей читаемости */
+            margin: 0 auto;
+        }
+        .list-group-item {
+            background-color: var(--bg-medium);
+            border: 1px solid var(--border-color);
+            padding: 1rem 1.5rem;
+            transition: background-color 0.2s ease-in-out, border-left-color 0.2s ease-in-out;
+            border-left: 4px solid transparent; /* Для акцента при наведении */
+        }
+        .list-group-item:hover {
+            background-color: var(--bg-dark);
+            border-left-color: var(--accent-dark);
+        }
+        .list-group-item a {
+            text-decoration: none;
+            font-family: var(--font-primary);
+            font-size: 1.2rem; /* Размер названия рассказа */
+            color: var(--text-color);
+            font-weight: 500; /* Средняя жирность */
+            display: block; /* Чтобы ссылка занимала всю ширину элемента */
+        }
+        .list-group-item a:hover {
+            color: var(--accent-dark); /* Цвет ссылки при наведении на сам текст */
+        }
+        .list-group-item small { /* Для дополнительной информации, если нужна (год, журнал) */
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 767.98px) {
+            .stories-page-header {
+                font-size: 1.8rem;
+            }
+            .stories-intro {
+                font-size: 1.05rem;
+            }
+            .list-group-item a {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Навигационная панель (такая же, как на других страницах) -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <img src="../logo.png" alt="Логотип Квеста" width="30" height="30"
+                    class="d-inline-block align-text-top me-2">
+                <span class="brand-main-text">Мир Чехова</span>
+                <span class="brand-tagline ms-2">| грустные оптимисты</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../1/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 1:</span>
+                            <span class="quest-title d-block">Шуточка</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../2/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 2:</span>
+                            <span class="quest-title d-block">Толстый и тонкий</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../3/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 3:</span>
+                            <span class="quest-title d-block">Злоумышленник</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../4/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 4:</span>
+                            <span class="quest-title d-block">Спать хочется</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../5/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 5:</span>
+                            <span class="quest-title d-block">Дорогая собака</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../6/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 6:</span>
+                            <span class="quest-title d-block">Пари</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../7/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 7:</span>
+                            <span class="quest-title d-block">Не в духе</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-center" href="../8/quest_page_1.html">
+                            <span class="quest-label d-block">Квест 8:</span>
+                            <span class="quest-title d-block">Биография</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основное содержимое страницы -->
+    <div class="container story-list-container mt-4 mb-5">
+        <h1 class="stories-page-header">Читать рассказы А.П. Чехова</h1>
+        <p class="stories-intro">
+            Здесь собраны ссылки на тексты некоторых известных произведений Антона Павловича Чехова. 
+            Выберите интересующий вас рассказ, чтобы погрузиться в мир его уникального творчества.
+        </p>
+
+        <div class="list-group shadow-sm">
+            <!-- ЗАМЕНИТЕ "#" НА РЕАЛЬНЫЕ ССЫЛКИ -->
+            <a href="#" class="list-group-item list-group-item-action" target="_blank" rel="noopener noreferrer">
+                Шуточка
+                <!-- <small>Год публикации: 1886</small> -->
+            </a>
+            <a href="#" class="list-group-item list-group-item-action" target="_blank" rel="noopener noreferrer">
+                Толстый и тонкий
+                <!-- <small>Год публикации: 1883</small> -->
+            </a>
+            <a href="#" class="list-group-item list-group-item-action" target="_blank" rel="noopener noreferrer">
+                Злоумышленник
+                <!-- <small>Год публикации: 1885</small> -->
+            </a>
+            <a href="#" class="list-group-item list-group-item-action" target="_blank" rel="noopener noreferrer">
+                Спать хочется
+                <!-- <small>Год публикации: 1888</small> -->
+            </a>
+            <a href="#" class="list-group-item list-group-item-action" target="_blank" rel="noopener noreferrer">
+                Дорогая собака
+                <!-- <small>Год публикации: 1885</small> -->
+            </a>
+            <a href="#" class="list-group-item list-group-item-action" target="_blank" rel="noopener noreferrer">
+                Пари
+                <!-- <small>Год публикации: 1889</small> -->
+            </a>
+            <a href="#" class="list-group-item list-group-item-action" target="_blank" rel="noopener noreferrer">
+                Не в духе
+                <!-- <small>Год публикации: 1884</small> -->
+            </a>
+            <!-- Добавьте сюда больше рассказов по аналогии -->
+            <!-- Пример с дополнительной информацией:
+            <a href="#" class="list-group-item list-group-item-action" target="_blank" rel="noopener noreferrer">
+                Название рассказа
+                <small>Год публикации: XXXX, Журнал: "Название журнала"</small>
+            </a>
+            -->
+        </div>
+    </div>
+
+    <!-- Подвал (если нужен) -->
+    <footer class="footer mt-auto py-3"> <!-- mt-auto для прижатия к низу, если контента мало -->
+        <div class="container text-center">
+            <span class="text-muted">© 2024 Литературный квест "Мир Чехова".</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Специфичный JS для этой страницы не требуется -->
+</body>
+</html>
