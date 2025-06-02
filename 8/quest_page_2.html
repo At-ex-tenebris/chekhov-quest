@@ -4,287 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вызов от Чехова - Мир Чехова</title> <!-- Измените title на соответствующий -->
+    <title>Квест 1: Тайна Портрета - Мир Чехова</title>
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Lora:ital,wght@0,400..700;1,400..700&display=swap"
         rel="stylesheet">
-
-    <!-- Custom CSS (убедитесь, что путь правильный) -->
-    <!-- Если challenge.html в той же папке, что и style.css: -->
     <link rel="stylesheet" href="../style.css">
-    <!-- Если challenge.html в подпапке (например, quests/challenge.html): -->
-    <style>
-        /* Предполагается, что переменные --bg-light, --bg-medium и т.д. определены в вашем основном style.css */
-        .fill-blanks-quest-container {
-            max-width: 900px;
-            margin: 2rem auto;
-            background-color: var(--bg-medium, #f5eadd);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            font-family: var(--font-primary, 'Lora', serif);
-            line-height: 1.8;
-            /* Улучшаем читаемость текста с инпутами */
-        }
-
-        .fill-blanks-header {
-            font-family: var(--font-secondary, 'Merriweather', serif);
-            color: var(--accent-dark, #8B4513);
-            text-align: center;
-            margin-bottom: 2rem;
-            font-size: 1.8rem;
-        }
-
-        .quest-text p {
-            margin-bottom: 1.5rem;
-            /* Отступы между абзацами */
-            font-size: 1.1rem;
-            color: var(--text-color, #4b3f31);
-        }
-
-        .blank-input {
-            border: none;
-            border-bottom: 2px solid var(--accent-light, #d2b48c);
-            background-color: transparent;
-            padding: 2px 5px;
-            margin: 0 3px;
-            /* Небольшие отступы вокруг инпута */
-            font-family: inherit;
-            /* Наследуем шрифт абзаца */
-            font-size: inherit;
-            /* Наследуем размер шрифта абзаца */
-            color: var(--accent-dark, #8B4513);
-            /* Цвет вводимого текста */
-            text-align: center;
-            transition: border-color 0.3s ease;
-        }
-
-        .blank-input:focus {
-            outline: none;
-            border-bottom-color: var(--accent-dark, #8B4513);
-        }
-
-        /* Стили для подсветки правильных/неправильных ответов */
-        .blank-input.correct {
-            border-bottom-color: green !important;
-            color: green;
-        }
-
-        .blank-input.incorrect {
-            border-bottom-color: red !important;
-            color: red;
-        }
-
-        /* Адаптация ширины инпутов (можно настроить более точно) */
-        input[data-blank-id="blank1"] {
-            width: 50px;
-        }
-
-        /* 29 */
-        input[data-blank-id="blank2"] {
-            width: 65px;
-        }
-
-        /* 1860 */
-        input[data-blank-id="blank3"] {
-            width: 120px;
-        }
-
-        /* Таганроге */
-        input[data-blank-id="blank4"] {
-            width: 130px;
-        }
-
-        /* церковных */
-        input[data-blank-id="blank5"] {
-            width: 130px;
-        }
-
-        /* церковный */
-        input[data-blank-id="blank6"] {
-            width: 130px;
-        }
-
-        /* греческую */
-        input[data-blank-id="blank7"] {
-            width: 65px;
-        }
-
-        /* 1868 */
-        input[data-blank-id="blank8"] {
-            width: 140px;
-        }
-
-        /* Толстый и тонкийом */
-        input[data-blank-id="blank9"] {
-            width: 80px;
-        }
-
-        /* театр */
-        input[data-blank-id="blank10"] {
-            width: 120px;
-        }
-
-        /* Чехонте */
-        input[data-blank-id="blank11"] {
-            width: 190px;
-        }
-
-        /* тринадцатилетнем */
-
-        .fill-blanks-controls {
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .btn-fill-blanks-action {
-            background-color: var(--accent-dark, #8B4513);
-            border-color: var(--accent-dark, #8B4513);
-            color: var(--bg-light, #fdfaf5);
-            padding: 0.7rem 1.8rem;
-            font-size: 1.05rem;
-            margin: 5px;
-            border-radius: 5px;
-        }
-
-        .btn-fill-blanks-action:hover {
-            background-color: var(--text-color, #4b3f31);
-            border-color: var(--text-color, #4b3f31);
-        }
-
-        #fill-blanks-feedback {
-            text-align: center;
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-top: 1.5rem;
-            min-height: 30px;
-        }
-
-        .feedback-correct {
-            color: green;
-        }
-
-        .feedback-incorrect {
-            color: red;
-        }
-    </style>
-    <style>
-        /* ... ваши существующие стили для .fill-blanks-quest-container и его содержимого ... */
-
-        .fill-blanks-quest-page-container {
-            display: flex;
-            justify-content: center;
-            /* Центрируем основной контент, если картинки не занимают всю ширину */
-            align-items: flex-start;
-            /* Выравниваем по верху */
-            gap: 20px;
-            /* Пространство между картинками и основным блоком */
-            padding: 1rem;
-            /* Отступы для всего блока страницы квеста */
-            max-width: 1400px;
-            /* Общая максимальная ширина, чтобы не растягивалось слишком сильно */
-            margin: 0 auto;
-            /* Центрирование всего блока страницы */
-        }
-
-        .fill-blanks-quest-container {
-            /* Теперь это центральный блок, можно задать ему flex-grow или конкретную ширину */
-            flex-grow: 1;
-            /* Позволяет центральному блоку занимать доступное пространство */
-            max-width: 900px;
-            /* Оставляем максимальную ширину для текстового блока */
-            /* margin: 2rem auto; Убираем, так как позиционирование теперь через flex */
-        }
-
-        .quest-image-left,
-        .quest-image-right {
-            flex-shrink: 0;
-            /* Чтобы картинки не сжимались */
-            width: 200px;
-            /* Примерная ширина для картинок, настройте по своему вкусу */
-            /* Можно также использовать max-width и height: auto для адаптивности картинок */
-        }
-
-        .quest-image-left img,
-        .quest-image-right img {
-            width: 100%;
-            height: auto;
-            /* Сохраняет пропорции изображения */
-            border-radius: 8px;
-            /* Небольшое скругление для картинок */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Адаптивность: на маленьких экранах картинки могут уходить или становиться меньше/сверху */
-        @media (max-width: 1200px) {
-
-            /* Например, когда экран становится уже */
-            .quest-image-left,
-            .quest-image-right {
-                width: 150px;
-                /* Уменьшаем картинки */
-            }
-        }
-
-        @media (max-width: 992px) {
-
-            /* Когда экран еще уже */
-            .fill-blanks-quest-page-container {
-                flex-direction: column;
-                /* Ставим элементы в колонку: картинка, текст, картинка */
-                align-items: center;
-                /* Центрируем все по горизонтали */
-            }
-
-            .quest-image-left,
-            .quest-image-right {
-                width: 70%;
-                /* Картинки могут занимать большую часть ширины */
-                max-width: 300px;
-                /* Но не слишком широко */
-                margin-bottom: 1rem;
-                /* Отступ снизу для картинок в колонке */
-            }
-
-            .quest-image-left {
-                order: -1;
-                /* Левая картинка может быть первой в колонке */
-            }
-
-            .fill-blanks-quest-container {
-                order: 0;
-                /* Текстовый блок */
-            }
-
-            .quest-image-right {
-                order: 1;
-                /* Правая картинка последней */
-            }
-        }
-
-        @media (max-width: 767px) {
-            .fill-blanks-quest-container {
-                padding: 1rem;
-                /* Уменьшаем внутренние отступы на мобильных */
-            }
-        }
-    </style>
 </head>
 
-<body class="quest-active"> <!-- или другой класс, если нужен особый фон/стили для этой страницы -->
+<body class="quest-active">
 
-    <!-- Navigation Bar - ТАКАЯ ЖЕ, КАК НА ДРУГИХ СТРАНИЦАХ -->
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="../index.html"> <!-- Ссылка на главную -->
-                <!-- Убедитесь, что путь к logo.png правильный -->
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
                 <img src="../logo.png" alt="Логотип Квеста" width="30" height="30"
                     class="d-inline-block align-text-top me-2">
                 <span class="brand-main-text">Мир Чехова</span>
@@ -349,177 +85,108 @@
         </div>
     </nav>
 
-    <!-- Основное содержимое страницы -->
-    <main class="fill-blanks-quest-page-container"> <!-- Новый внешний контейнер для flexbox -->
-        <div class="quest-image-left">
-            <img src="left-image.png" alt="Левое изображение квеста">
-            <!-- Замените src на путь к вашему левому изображению -->
+    <main class="container quest-page-container my-5 pt-5">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="quest-question mb-4">Какая иллюстрация соответсвует рассказу "Толстый и тонкий"?</h2>
+            </div>
         </div>
 
-        <div class="fill-blanks-quest-container"> <!-- Это ваш существующий контейнер с текстом и инпутами -->
-            <h2 class="fill-blanks-header">Биография Чехова - Заполните пропуски</h2>
-
-            <div class="quest-text" id="questTextContainer">
-                <p>
-                    Родился Антон Чехов <input type="text" class="blank-input" id="blank1" data-blank-id="blank1">
-                    января
-                    <input type="text" class="blank-input" id="blank2" data-blank-id="blank2"> года в
-                    <input type="text" class="blank-input" id="blank3" data-blank-id="blank3">.
-                    Его отец Павел Чехов был владельцем бакалейной лавки, купцом третьей гильдии.
-                    Мама Антона Чехова, в девичестве Морозова, из купеческой семьи, была домохозяйкой.
-                    Антон стал третьим из шестерых детей этого семейства, где подрастало пять сыновей и одна дочь.
-                </p>
-                <p>
-                    Детские годы Антона и его братьев прошли в постоянных
-                    <input type="text" class="blank-input" id="blank4" data-blank-id="blank4"> праздниках и именинах.
-                    После занятий в школе мальчики должны были сторожить лавку своего отца, ежедневно они вставали в 5
-                    утра, и шли петь в
-                    <input type="text" class="blank-input" id="blank5" data-blank-id="blank5"> хор.
-                    Чехов потом сказал, что детства у него и не было.
-                </p>
-                <p>
-                    Сразу Антона отдали в <input type="text" class="blank-input" id="blank6" data-blank-id="blank6">
-                    школу в Таганроге,
-                    в конце августа <input type="text" class="blank-input" id="blank7" data-blank-id="blank7"> года он
-                    стал учеником приготовительного класса гимназии,
-                    которая была одной из старейших в России. В это время отцу семейства пришлось срочно скрываться от
-                    кредиторов, и он уехал в Москву.
-                    Антон продолжал учиться в Таганроге, и ему пришлось жить в своем собственном доме, только уже
-                    купленном другими людьми.
-                    Чтобы его не выгнали, парень исправно платил, а деньги зарабатывал, подрабатывая
-                    <input type="text" class="blank-input" id="blank8" data-blank-id="blank8">.
-                </p>
-                <p>
-                    Именно во время учебы в гимназии Чехов полюбил книги и
-                    <input type="text" class="blank-input" id="blank9" data-blank-id="blank9">,
-                    у него появилось своеобразное видение окружающей действительности. В то время и произошла первая
-                    проба пера – парень стал автором нескольких юмористических повествований и получил псевдоним
-                    <input type="text" class="blank-input" id="blank10" data-blank-id="blank10">.
-                    Так его назвал Федор Покровский, преподаватель Закона Божьего в гимназии.
-                    В <input type="text" class="blank-input" id="blank11" data-blank-id="blank11"> возрасте Чехов понял,
-                    что ему нравится театр и все, что с ним связано.
-                    Он стал активным участником домашних постановок, которые устраивали его товарищи по гимназии.
-                </p>
+        <div class="row justify-content-center image-options-row g-3 g-lg-4">
+            <div class="col-10 col-sm-6 col-md-5 col-lg-3 image-option-wrapper">
+                <a href="javascript:void(0);" class="image-option-link" onclick="checkAnswer(this, false)">
+                    <img src="image3.jpeg" alt="Вариант 1" class="img-fluid quest-image">
+                </a>
             </div>
-
-            <div id="fill-blanks-feedback"></div>
-
-            <div class="fill-blanks-controls">
-                <button class="btn btn-fill-blanks-action" id="checkBlanksButton">Проверить</button>
-                <button class="btn btn-fill-blanks-action" id="resetBlanksButton"
-                    style="background-color: var(--accent-light, #d2b48c); border-color: var(--accent-light, #d2b48c); color: var(--text-color, #4b3f31);">Сбросить</button>
-                <a href="quest_page_3.html" class="btn btn-fill-blanks-action" id="nextFillBlanksQuestButton"
-                    style="display: none;">Следующий этап</a>
+            <div class="col-10 col-sm-6 col-md-5 col-lg-3 image-option-wrapper">
+                <a href="javascript:void(0);" class="image-option-link" onclick="checkAnswer(this, false)">
+                    <img src="image1.png" alt="Вариант 2" class="img-fluid quest-image">
+                </a>
             </div>
-        </div> <!-- Конец .fill-blanks-quest-container -->
+            <div class="col-10 col-sm-6 col-md-5 col-lg-3 image-option-wrapper">
+                <a href="javascript:void(0);" class="image-option-link" onclick="checkAnswer(this, false)">
+                    <img src="image4.jpeg" alt="Вариант 3" class="img-fluid quest-image">
+                </a>
+            </div>
+            <div class="col-10 col-sm-6 col-md-5 col-lg-3 image-option-wrapper">
+                <a href="javascript:void(0);" class="image-option-link" onclick="checkAnswer(this, true)">
+                    <img src="image2.jpeg" alt="Вариант 4" class="img-fluid quest-image">
+                </a>
+            </div>
+        </div>
 
-        <div class="quest-image-right">
-            <img src="right-image.png" alt="Правое изображение квеста">
-            <!-- Замените src на путь к вашему правому изображению -->
+        <div class="row mt-4">
+            <div class="col-12 text-center">
+                <p id="quest-feedback" class="quest-feedback-message"> </p>
+            </div>
+        </div>
+        <div class="row mt-3 mb-5">
+            <div class="col-12 text-center">
+                <a href="quest_page_3.html" id="next-quest-button" class="btn btn-start-quest d-none">Следующий
+                    вопрос</a>
+            </div>
         </div>
     </main>
 
-    <!-- Картинка Чехова в углу (если она нужна на этой странице) -->
     <div id="chekhov-corner">
-        <!-- Убедитесь, что путь к placeholder-chekhov.png правильный -->
         <img src="placeholder-chekhov.png" alt="Антон Чехов" title="Антон Павлович Чехов">
     </div>
 
-    <!-- Подвал - ТАКОЙ ЖЕ, КАК НА ДРУГИХ СТРАНИЦАХ -->
     <footer class="footer mt-auto py-3">
         <div class="container text-center">
-            <span class="text-muted">© 2024 Литературный квест "Мир Чехова". Все права защищены.</span>
+            <span class="text-muted">© 2025 Литературный квест "Мир Чехова". Все права защищены.</span>
         </div>
     </footer>
 
-    <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <!-- Сюда можно добавить специфичные для этой страницы JS, если понадобятся -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const checkBlanksButton = document.getElementById('checkBlanksButton');
-            const resetBlanksButton = document.getElementById('resetBlanksButton');
-            const nextFillBlanksQuestButton = document.getElementById('nextFillBlanksQuestButton');
-            const feedbackDiv = document.getElementById('fill-blanks-feedback');
-            const inputs = document.querySelectorAll('.blank-input');
+        let questionSolved = false; // Флаг, что вопрос решен верно
+        let isDuringRetryDelay = false; // Флаг, что идет 3-секундная задержка
+        let attemptsMade = 0; // Счетчик сделанных (неправильных) попыток
 
-            const correctAnswers = {
-                "blank1": "29",
-                "blank2": "1860",
-                "blank3": "Таганроге",
-                "blank4": "церковных",
-                "blank5": "церковный",
-                "blank6": "греческую",
-                "blank7": "1868",
-                "blank8": "Толстый и тонкийом",
-                "blank9": "театр",
-                "blank10": "Чехонте",
-                "blank11": "тринадцатилетнем"
-            };
+        function checkAnswer(element, isCorrect) {
+            // Если вопрос уже решен или идет задержка перед повторной попыткой, ничего не делаем
+            if (questionSolved || isDuringRetryDelay) return;
 
-            checkBlanksButton.addEventListener('click', () => {
-                let allCorrect = true;
-                let answeredCount = 0;
+            const feedbackEl = document.getElementById('quest-feedback');
+            const nextButton = document.getElementById('next-quest-button');
+            const allOptions = document.querySelectorAll('.image-option-link');
 
-                inputs.forEach(input => {
-                    const userAnswer = input.value.trim().toLowerCase();
-                    const correctAnswer = correctAnswers[input.id]?.toLowerCase(); // ?. для безопасности
+            // Сначала временно отключаем все варианты, чтобы избежать многократных нажатий
+            allOptions.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
 
-                    input.classList.remove('correct', 'incorrect'); // Сбрасываем предыдущие классы
+            if (isCorrect) {
+                questionSolved = true; // Вопрос решен
+                element.classList.add('correct');
+                feedbackEl.textContent = 'Верно!';
+                feedbackEl.className = 'quest-feedback-message correct';
+                nextButton.classList.remove('d-none'); // Показываем кнопку "Следующий вопрос"
+                // Варианты остаются отключенными, так как вопрос решен
+            } else {
+                attemptsMade++; // Увеличиваем счетчик попыток
+                element.classList.add('incorrect'); // Помечаем выбранный неверный вариант
 
-                    if (userAnswer) { // Считаем только заполненные поля для определения "все ли отвечены"
-                        answeredCount++;
-                    }
+                isDuringRetryDelay = true; // Активируем флаг задержки
+                feedbackEl.textContent = 'Неверно. Попробуйте еще раз через 3 секунды...';
+                feedbackEl.className = 'quest-feedback-message incorrect';
 
-                    if (correctAnswer && userAnswer === correctAnswer) {
-                        input.classList.add('correct');
-                    } else if (userAnswer) { // Если поле заполнено, но неправильно
-                        input.classList.add('incorrect');
-                        allCorrect = false;
-                    } else { // Если поле пустое и оно обязательно
-                        allCorrect = false; // Считаем ошибкой, если обязательное поле не заполнено
-                    }
-                });
-
-                // Проверяем, все ли поля, для которых есть ответы, были заполнены.
-                // Если не все обязательные поля заполнены, то это не полный правильный ответ.
-                if (answeredCount < Object.keys(correctAnswers).length) {
-                    allCorrect = false;
-                }
-
-
-                if (allCorrect) {
-                    feedbackDiv.textContent = 'Поздравляем! Все пропуски заполнены верно!';
-                    feedbackDiv.className = 'feedback-correct';
-                    nextFillBlanksQuestButton.style.display = 'inline-block';
-                    checkBlanksButton.disabled = true;
-                    inputs.forEach(input => input.disabled = true);
-                } else {
-                    feedbackDiv.textContent = 'Некоторые ответы неверны или пропущены. Пожалуйста, проверьте и попробуйте снова.';
-                    feedbackDiv.className = 'feedback-incorrect';
-                    nextFillBlanksQuestButton.style.display = 'none';
-                }
                 setTimeout(() => {
-                    if (!allCorrect) {
-                        feedbackDiv.textContent = '';
-                    }
-                }, 5000);
-            });
+                    element.classList.remove('incorrect'); // Убираем пометку с неверного варианта
+                    feedbackEl.textContent = ' '; // Очищаем сообщение обратной связи
+                    feedbackEl.className = 'quest-feedback-message'; // Сбрасываем класс сообщения
 
-            resetBlanksButton.addEventListener('click', () => {
-                inputs.forEach(input => {
-                    input.value = '';
-                    input.classList.remove('correct', 'incorrect');
-                    input.disabled = false;
-                });
-                feedbackDiv.textContent = '';
-                feedbackDiv.className = '';
-                nextFillBlanksQuestButton.style.display = 'none';
-                checkBlanksButton.disabled = false;
-            });
-        });
+                    // Снова включаем все варианты для повторной попытки
+                    allOptions.forEach(opt => {
+                        opt.style.pointerEvents = 'auto';
+                    });
+                    isDuringRetryDelay = false; // Деактивируем флаг задержки
+                }, 3000); // Задержка 3 секунды
+            }
+        }
     </script>
 </body>
 
